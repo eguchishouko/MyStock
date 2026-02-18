@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { stockOpinions, getTradingViewLink, getRatingColor } from '../data/stockOpinions';
+
+// 按板块分组
+const sectors = {};
+stockOpinions.forEach(item => {
+  if (!sectors[item.sector]) sectors[item.sector] = [];
+  sectors[item.sector].push(item);
+});
+---
+
+<BaseLayout title="公司观点">
+  <div class="card">
+    <h1>🧐 市场观察 (Market Opinions)</h1>
+    <p>以下评级仅代表个人在特定时间点的偏见，不构成投资建议。<br>DYOR (Do Your Own Research).</p>
+    <a href="/" style="font-size:0.9rem;">← 返回首页</a>
+  </div>
+
+  {Object.keys(sectors).map(sector => (
+    <div class="card">
+      <h2 class="sector-title">{sector}</h2>
+      <div class="opinion-grid">
+        {sectors[sector].map(stock => (
+          <div class="opinion-item">
+            <div class="opinion-header">
+              <div class="stock-info">
+                <a href={getTradingViewLink(stock.symbol)} target="_blank" class="stock-symbol">
+                  {stock.symbol} <i class="fas fa-external-link-alt" style="font-size:0.7rem; opacity:0.5;"></i>
+                </a>
+                <div class="stock-name">{stock.name}</div>
+              </div>
+              <div class="stock-rating" style={`color: ${getRatingColor(stock.rating)}`}>
+                {stock.rating}
+              </div>
+            </div>
+            <p class="stock-content">{stock.content}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+
+  <style>
+    .sector-title { margin-bottom: 20px; font-size: 1.5rem; color: var(--text-main); border-left: 4px solid var(--highlight); padding-left: 10px; border-bottom: none !important; }
+    
+    .opinion-grid { display: grid; gap: 20px; }
+    
+    .opinion-item { 
+      background: rgba(255,255,255,0.03); 
+      border-radius: 8px; 
+      padding: 20px; 
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s;
+    }
+    .opinion-item:hover { background: rgba(255,255,255,0.06); }
+
+    .opinion-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    
+    .stock-symbol { 
+      font-size: 1.2rem; font-weight: bold; color: var(--highlight); 
+      text-decoration: none; display: flex; align-items: center; gap: 5px;
+    }
+    .stock-symbol:hover { text-decoration: underline; }
+    
+    .stock-name { font-size: 0.85rem; color: var(--text-sub); }
+    
+    .stock-rating { font-weight: bold; font-family: monospace; font-size: 0.9rem; padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,0.2); }
+    
+    .stock-content { font-size: 1rem; color: var(--text-main); line-height: 1.6; margin: 0; text-align: justify;}
+  </style>
+</BaseLayout>

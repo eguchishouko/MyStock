@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// 获取所有帖子并按时间排序
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="个人记录">
+  <div class="card">
+    <h1>📝 所有记录</h1>
+    <ul style="list-style:none; padding:0;">
+      {posts.map((post) => (
+        <li style="margin-bottom: 20px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px;">
+          <a href={`/blog/${post.slug}`} style="font-size:1.4rem; font-weight:bold; display:block; margin-bottom:5px;">
+            {post.data.title}
+          </a>
+          <div style="color:#888; font-size:0.9rem;">
+            {post.data.pubDate.toLocaleDateString('zh-CN')}
+          </div>
+          <p>{post.data.description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

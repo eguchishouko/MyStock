@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProfitChart from '../components/ProfitChart.astro';
+---
+
+<BaseLayout title="交易战绩">
+  <div class="card">
+    <h1>📊 资金曲线 (P&L Chart)</h1>
+    <p>基于 IBKR 净值数据绘制。</p>
+    <!-- 插入图表 -->
+    <ProfitChart />
+  </div>
+
+  <div class="card">
+    <h2>🏆 历史战绩详情</h2>
+    <p>这里把首页那个表格复制过来，或者写更详细的复盘。</p>
+    <!-- 这里你可以把 index.astro 里的表格搬过来 -->
+  </div>
+</BaseLayout>

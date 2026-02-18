@@ -1,0 +1,93 @@
+---
+// src/layouts/BaseLayout.astro
+import TrendBackground from '../components/TrendBackground.astro';
+const { title } = Astro.props;
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | Lotuseater</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style is:global>
+      /* 全局变量，保持和首页一致 */
+      :root {
+        --text-main: #e0e0e0; --text-sub: #b0b3b8;
+        --card-bg: rgba(22, 26, 30, 0.85); --card-border: rgba(255, 255, 255, 0.1);
+        --highlight: #2962ff; --profit: #00c853; --loss: #ff3d00;
+        --nav-bg: rgba(11, 14, 17, 0.9);
+      }
+      body.light-mode {
+        --text-main: #333333; --text-sub: #666666;
+        --card-bg: rgba(255, 255, 255, 0.85); --card-border: rgba(0, 0, 0, 0.1);
+        --highlight: #0052cc; --profit: #00796b; --loss: #d32f2f;
+        --nav-bg: rgba(240, 242, 245, 0.9);
+      }
+      body { margin: 0; padding-top: 80px; font-family: 'Segoe UI', Roboto, sans-serif; color: var(--text-main); background-color: #0b0e11; transition: background-color 0.3s; padding-bottom: 100px; overflow-x: hidden; }
+      body.light-mode { background-color: #f0f2f5; }
+
+      /* Navbar */
+      .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); z-index: 1000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; }
+      .nav-user { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+      .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #2962ff, #ff3d00); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+      .username { font-weight: bold; font-size: 1.1rem; }
+      
+      .nav-controls { margin-left: auto; display: flex; gap: 10px; }
+      .btn-toggle { background: transparent; border: 1px solid var(--card-border); color: var(--text-main); padding: 5px 12px; border-radius: 20px; cursor: pointer; display: flex; gap: 5px; align-items: center; transition: all 0.2s; white-space: nowrap; }
+      .btn-toggle:hover { background: rgba(200, 9, 9, 0.1); }
+      .btn-toggle.active { background: var(--highlight); color: white; border-color: var(--highlight); }
+
+      /* Layout */
+      .container { max-width: 850px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+      .card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid var(--card-border); border-radius: 16px; padding: 30px; margin-bottom: 20px; }
+      a { color: var(--highlight); text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <!-- 引入 K线背景 -->
+    <TrendBackground />
+    
+    <nav class="navbar">
+      <a href="/" class="nav-user">
+        <div class="avatar">L</div>
+        <div class="username">Lotuseater</div>
+      </a>
+      <div class="nav-controls">
+        <button class="btn-toggle" onclick="toggleTheme()" id="btn-theme"><i class="fas fa-moon"></i></button>
+        <!-- 修复：这里之前漏掉了 K线开关 -->
+        <button class="btn-toggle active" onclick="toggleChart()" id="btn-chart"><i class="fas fa-chart-line"></i></button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <slot />
+    </div>
+
+    <script is:inline>
+      // 这里的逻辑和首页保持一致，确保子页面也能控制K线
+      let isDark = true;
+      let isChart = true;
+      
+      const btnTheme = document.getElementById('btn-theme');
+      const btnChart = document.getElementById('btn-chart');
+
+      function toggleTheme() {
+        isDark = !isDark;
+        document.body.className = isDark ? '' : 'light-mode';
+        btnTheme.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        sync();
+      }
+
+      function toggleChart() {
+        isChart = !isChart;
+        btnChart.classList.toggle('active');
+        sync();
+      }
+
+      function sync() {
+        window.dispatchEvent(new CustomEvent('update-canvas', { detail: { theme: isDark?'dark':'light', showChart: isChart } }));
+      }
+    </script>
+  </body>
+</html>

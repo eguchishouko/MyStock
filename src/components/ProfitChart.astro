@@ -1,0 +1,51 @@
+<div id="pnl-chart" style="width: 100%; height: 400px;"></div>
+
+<script>
+  import * as echarts from 'echarts';
+
+  // --- 在这里填入你的 IBKR 数据 ---
+  // 只需要两个数组：日期 和 净值(Net Liquidation Value)
+  const dates = ['2025-01-01', '2025-02-01', '2025-03-01', '2025-04-01', '2025-05-01', '2025-06-01', '2026-01-01', '2026-02-16'];
+  const values = [1000000, 1100000, 1050000, 1200000, 900000, 800000, 1500000, 1465433];
+
+  const chartDom = document.getElementById('pnl-chart');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    backgroundColor: 'transparent',
+    tooltip: { trigger: 'axis' },
+    grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: dates,
+      axisLine: { lineStyle: { color: '#888' } }
+    },
+    yAxis: {
+      type: 'value',
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } },
+      axisLabel: { color: '#888' }
+    },
+    series: [
+      {
+        name: 'Net Liq',
+        type: 'line',
+        smooth: true, // 平滑曲线
+        symbol: 'none',
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(41, 98, 255, 0.5)' },
+            { offset: 1, color: 'rgba(41, 98, 255, 0)' }
+          ])
+        },
+        lineStyle: { width: 3, color: '#2962ff' },
+        data: values
+      }
+    ]
+  };
+
+  myChart.setOption(option);
+
+  // 响应窗口大小变化
+  window.addEventListener('resize', () => myChart.resize());
+</script>
