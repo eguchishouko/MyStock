@@ -10,6 +10,7 @@ import DragonDashboard from '../components/DragonDashboard.astro';
     <title>Lotuseater | 交易思考</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+      /* 全局与变量 */
       :root {
         --text-main: #e0e0e0; --text-sub: #b0b3b8;
         --card-bg: rgba(22, 26, 30, 0.85); --card-border: rgba(255, 255, 255, 0.1);
@@ -25,48 +26,34 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       body { margin: 0; padding-top: 80px; font-family: 'Segoe UI', Roboto, sans-serif; color: var(--text-main); background-color: #0b0e11; transition: background-color 0.3s; padding-bottom: 200px; overflow-x: hidden; }
       body.light-mode { background-color: #f0f2f5; }
 
-      /* --- 布局容器 (修复布局崩坏的关键) --- */
       .container { max-width: 850px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
       section { min-height: 40vh; display: flex; flex-direction: column; justify-content: center; margin-bottom: 60px; }
       
-      /* 卡片样式 */
       .card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid var(--card-border); border-radius: 16px; padding: 30px; margin-bottom: 20px; transition: transform 0.3s; }
       .card:hover { transform: translateY(-5px); border-color: var(--highlight); }
       .card h2 { border-bottom: 2px solid var(--highlight); display: inline-block; padding-bottom: 5px; margin-top: 0; color: var(--text-main); font-size: 1.5rem; }
       p { line-height: 1.8; color: var(--text-sub); font-size: 1.05rem; }
 
-      /* 置顶入口样式 (Pinned Entry) */
       .pinned-entry {
         display: flex; align-items: center; gap: 15px;
         background: linear-gradient(135deg, rgba(41, 98, 255, 0.1), rgba(41, 98, 255, 0.05));
-        border: 1px solid rgba(41, 98, 255, 0.3);
-        border-radius: 12px; padding: 20px;
-        cursor: pointer; transition: all 0.2s;
-        margin-bottom: 30px; text-decoration: none;
+        border: 1px solid rgba(41, 98, 255, 0.3); border-radius: 12px; padding: 20px;
+        cursor: pointer; transition: all 0.2s; margin-bottom: 30px; text-decoration: none;
       }
-      .pinned-entry:hover {
-        background: linear-gradient(135deg, rgba(41, 98, 255, 0.2), rgba(41, 98, 255, 0.1));
-        transform: translateY(-2px); box-shadow: 0 5px 15px rgba(41, 98, 255, 0.15);
-      }
+      .pinned-entry:hover { background: linear-gradient(135deg, rgba(41, 98, 255, 0.2), rgba(41, 98, 255, 0.1)); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(41, 98, 255, 0.15); }
       .pinned-icon { font-size: 2rem; color: var(--highlight); }
       .pinned-content { flex: 1; }
       .pinned-title { font-size: 1.1rem; font-weight: bold; color: var(--text-main); margin-bottom: 5px; }
       .pinned-desc { font-size: 0.9rem; color: var(--text-sub); }
       .pinned-arrow { color: var(--text-sub); }
 
-      /* 表格样式 */
       .table-wrapper { overflow-x: auto; }
       table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 0.95rem; table-layout: fixed; }
       th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid var(--card-border); overflow: hidden; text-overflow: ellipsis; }
-      th:nth-child(1), td:nth-child(1) { width: 30%; }
-      th:nth-child(2), td:nth-child(2) { width: 35%; }
-      th:nth-child(3), td:nth-child(3) { width: 35%; }
+      th:nth-child(1), td:nth-child(1) { width: 30%; } th:nth-child(2), td:nth-child(2) { width: 35%; } th:nth-child(3), td:nth-child(3) { width: 35%; }
       th { color: var(--text-sub); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-      .profit { color: var(--profit); font-weight: bold; } 
-      .loss { color: var(--loss); font-weight: bold; }
-      .flat { color: var(--text-sub); }
+      .profit { color: var(--profit); font-weight: bold; } .loss { color: var(--loss); font-weight: bold; } .flat { color: var(--text-sub); }
 
-      /* Navbar */
       .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); z-index: 1000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; }
       .nav-user { display: flex; align-items: center; gap: 10px; }
       .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #2962ff, #ff3d00); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
@@ -76,7 +63,6 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       .btn-toggle:hover { background: rgba(255,255,255,0.1); }
       .btn-toggle.active { background: var(--highlight); color: white; border-color: var(--highlight); }
 
-      /* 博客预览 */
       .post-preview { margin-bottom: 20px; border-bottom: 1px solid var(--card-border); padding-bottom: 15px; }
       .post-preview:last-child { border-bottom: none; margin-bottom: 0; }
       .post-title { font-size: 1.2rem; font-weight: bold; color: var(--text-main); text-decoration: none; display: block; margin-bottom: 5px; transition: color 0.2s; }
@@ -85,13 +71,11 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       .btn-more { display: inline-block; margin-top: 15px; padding: 8px 20px; border: 1px solid var(--highlight); color: var(--highlight); border-radius: 20px; text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
       .btn-more:hover { background: var(--highlight); color: white; }
 
-      /* 加密钱包 */
       .crypto-item { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 10px; }
       .crypto-info { display: flex; align-items: center; gap: 10px; color: var(--text-main); font-weight: 500; }
       .crypto-info i { width: 30px; text-align: center; display: inline-block; font-size: 1.2rem; }
       .crypto-addr { font-family: monospace; color: var(--text-sub); font-size: 0.9rem; opacity: 0.6; }
       
-      /* 圆环图 */
       .chart-container { display: flex; align-items: center; gap: 30px; margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 12px; }
       .donut-chart { width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(var(--highlight) 0% 97.6%, #707a8a 97.6% 100%); position: relative; display: flex; justify-content: center; align-items: center; }
       .donut-chart::after { content: ""; position: absolute; width: 70px; height: 70px; background: var(--card-bg); border-radius: 50%; }
@@ -99,20 +83,20 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       .chart-legend { display: flex; flex-direction: column; gap: 10px; }
       .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
       .dot { width: 10px; height: 10px; border-radius: 50%; }
-      .dot-oxy { background: var(--highlight); }
-      .dot-cash { background: #707a8a; }
+      .dot-oxy { background: var(--highlight); } .dot-cash { background: #707a8a; }
 
-      /* 黑视特效 */
       #vignette-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 800; background: radial-gradient(circle, transparent 50%, black 120%); opacity: 0; transition: opacity 0.1s linear; }
     </style>
   </head>
   <body>
-    <!-- 背景与特效 -->
     <TrendBackground />
-    <DragonDashboard />
+    <!-- 给龙组件外层套一个包裹器，方便JS控制显隐 -->
+    <div id="dragon-global-wrapper" style="transition: opacity 0.3s;">
+      <DragonDashboard />
+    </div>
+    
     <div id="vignette-overlay"></div>
 
-    <!-- 导航栏 -->
     <nav class="navbar">
       <div class="nav-user">
         <div class="avatar">L</div>
@@ -124,58 +108,56 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       </div>
     </nav>
 
-    <!-- 页面主体容器 -->
     <div class="container">
       
-      <!-- 1. 简介 (修复：找回丢失的简介) -->
       <section>
         <div class="card">
           <h1>👋 简介 (Intro)</h1>
           <p>这里记录一些股票操作的记录，对各个公司股票的观点等。<br>忙时上班，闲时研究。</p>
-          <p>我认为之前亏损太多，很大一部分原因就是复盘做的太少，对很多公司的思考缺乏准确的记录。<br>写下来主要是为了<b>以此为镜，让自己更能理清逻辑</b>。</p>
+          <p>我认为之前亏损太多，很大一部分原因就是复盘做的太少，对很多公司的思考缺乏准确的记录。<br>写下来主要是为了以此为镜，让自己更能理清逻辑。</p>
         </div>
       </section>
 
-      <!-- 2. 个人记录 (包含置顶入口) -->
       <section>
         <div class="card">
           <h2>📝 个人记录 (Records)</h2>
           
-          <!-- 置顶：公司观点入口 -->
           <a href="/opinions" class="pinned-entry">
             <div class="pinned-icon"><i class="fas fa-search-dollar"></i></div>
             <div class="pinned-content">
               <div class="pinned-title">我对各个公司的看法 (Stock Opinions)</div>
-              <div class="pinned-desc">包含对各个标的的评级与分析。</div>
+              <div class="pinned-desc">包含对各个公司的评级与分析。</div>
             </div>
             <div class="pinned-arrow"><i class="fas fa-chevron-right"></i></div>
           </a>
 
-          <!-- 最新随笔列表 -->
           <div style="margin-top: 30px;">
             <h3 style="font-size:1rem; color:var(--text-sub); margin-bottom:15px; border-bottom:1px solid var(--card-border); padding-bottom:5px;">📅 最新随笔</h3>
             
+            <!-- 这里更新了你最新写的博客预览 -->
             <div class="post-preview">
-              <a href="#" class="post-title">网站基本建设完毕</a>
-              <div class="post-date">2026.02.18 </div>
+              <a href="/blog/2026-02-19-oxy-surge" class="post-title">OXY 大涨：地缘摩擦与财报利好共振</a>
+              <div class="post-date">2026.02.19 · 日常复盘</div>
               <div style="font-size:0.9rem; color:var(--text-sub); margin-top:5px;">
-                感谢Gemini 3.0 的鼎力支持。
+                今日大量美军力量在中东集结，与此同时伊朗也开始海军演习... 布油站稳70，西方石油开盘大幅上涨9%。
               </div>
             </div>
-            
+
             <div class="post-preview">
-              <a href="#" class="post-title">开始建设网站</a>
-              <div class="post-date">2026.02.07 </div>
+              <a href="/blog/first-post" class="post-title">网站基本建设完毕</a>
+              <div class="post-date">2026.02.18 · 日记</div>
+              <div style="font-size:0.9rem; color:var(--text-sub); margin-top:5px;">
+                感谢Gemini 3.0的鼎力支持。
+              </div>
             </div>
           </div>
 
           <div style="text-align: center; margin-top: 20px;">
-            <a href="/blog" class="btn-more">查看更多随笔 <i class="fas fa-arrow-right"></i></a>
+            <a href="/blog" class="btn-more">查看所有历史记录 <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
       </section>
 
-      <!-- 3. 交易战绩 -->
       <section>
         <div class="card">
           <h2>📊 交易战绩 (Trading)</h2>
@@ -188,7 +170,7 @@ import DragonDashboard from '../components/DragonDashboard.astro';
                 <tr>
                   <td><b>OXY</b></td>
                   <td>$45.48</td>
-                  <td class="flat">持仓观望</td>
+                  <td class="profit" style="color: var(--profit);">持有</td>
                 </tr>
               </tbody>
             </table>
@@ -199,23 +181,15 @@ import DragonDashboard from '../components/DragonDashboard.astro';
               <div class="chart-text">PORTFOLIO</div>
             </div>
             <div class="chart-legend">
-              <div class="legend-item">
-                <div class="dot dot-oxy"></div>
-                <div><b>OXY</b>: 97.6%</div>
-              </div>
-              <div class="legend-item">
-                <div class="dot dot-cash"></div>
-                <div><b>Cash</b>: 2.4%</div>
-              </div>
+              <div class="legend-item"><div class="dot dot-oxy"></div><div><b>OXY</b>: 97.6%</div></div>
+              <div class="legend-item"><div class="dot dot-cash"></div><div><b>Cash</b>: 2.4%</div></div>
             </div>
           </div>
 
           <h3 style="color:var(--text-sub); margin-bottom:10px; margin-top:30px;">🏁 已平仓 (Closed)</h3>
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr><th>代码</th><th>盈亏 %</th><th>状态</th></tr>
-              </thead>
+              <thead><tr><th>代码</th><th>盈亏 %</th><th>状态</th></tr></thead>
               <tbody>
                 <tr><td><b>AAL</b></td><td class="profit">+21.15%</td><td>已清仓</td></tr>
                 <tr><td><b>GOOGL</b></td><td class="profit">+18.09%</td><td>已清仓</td></tr>
@@ -231,31 +205,17 @@ import DragonDashboard from '../components/DragonDashboard.astro';
         </div>
       </section>
 
-      <!-- 4. 赞助 -->
       <section>
         <div class="card">
           <h2>⚡ 赞助 (Support)</h2>
           <p style="margin-bottom: 20px;">如果我的记录对你有帮助，欢迎投喂一点燃料：</p>
-          <div class="crypto-item">
-            <div class="crypto-info"><i class="fab fa-monero" style="color:#f26822"></i> XMR</div>
-            <div class="crypto-addr">44AFF...Placeholder</div>
-          </div>
-          <div class="crypto-item">
-            <div class="crypto-info"><i class="fas fa-cube" style="color:#00ffbd"></i> SOL</div>
-            <div class="crypto-addr">DnZw4...Placeholder</div>
-          </div>
-          <div class="crypto-item">
-            <div class="crypto-info"><i class="fab fa-ethereum" style="color:#627eea"></i> ETH</div>
-            <div class="crypto-addr">0x71C...Placeholder</div>
-          </div>
-          <div class="crypto-item">
-            <div class="crypto-info"><i class="fas fa-network-wired" style="color:#f3ba2f"></i> BSC</div>
-            <div class="crypto-addr">0x71C...Placeholder</div>
-          </div>
+          <div class="crypto-item"><div class="crypto-info"><i class="fab fa-monero" style="color:#f26822"></i> XMR</div><div class="crypto-addr">44AFF...Placeholder</div></div>
+          <div class="crypto-item"><div class="crypto-info"><i class="fas fa-cube" style="color:#00ffbd"></i> SOL</div><div class="crypto-addr">DnZw4...Placeholder</div></div>
+          <div class="crypto-item"><div class="crypto-info"><i class="fab fa-ethereum" style="color:#627eea"></i> ETH</div><div class="crypto-addr">0x71C...Placeholder</div></div>
+          <div class="crypto-item"><div class="crypto-info"><i class="fas fa-network-wired" style="color:#f3ba2f"></i> BSC</div><div class="crypto-addr">0x71C...Placeholder</div></div>
         </div>
       </section>
 
-      <!-- 5. 友链 -->
       <section>
         <div class="card">
           <h2>🔗 友链 (Friends)</h2>
@@ -264,13 +224,11 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       </section>
 
       <div style="height: 400px; display:flex; align-items:center; justify-content:center; color: #333;">
-        [ 这个页面可以再翻上去，但爆仓了再涨上去还有意义吗？ ]
+        [ 到底了 · Liquidation Zone ]
       </div>
-
     </div>
 
     <script is:inline>
-      // 黑视特效
       const vignette = document.getElementById('vignette-overlay');
       window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
@@ -283,11 +241,13 @@ import DragonDashboard from '../components/DragonDashboard.astro';
         vignette.style.opacity = opacity;
       });
 
-      // 主题与K线开关
       let isDark = true;
       let isChart = true;
       const btnTheme = document.getElementById('btn-theme');
       const btnChart = document.getElementById('btn-chart');
+      
+      // 拿到小黑龙的外层包裹器
+      const dragonWrapper = document.getElementById('dragon-global-wrapper');
 
       function toggleTheme() {
         isDark = !isDark;
@@ -298,6 +258,16 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       function toggleChart() {
         isChart = !isChart;
         btnChart.classList.toggle('active');
+        
+        // --- 修复点：关闭K线的同时，隐藏小黑龙看板 ---
+        if (isChart) {
+          dragonWrapper.style.opacity = '1';
+          dragonWrapper.style.pointerEvents = 'auto'; // 允许点击
+        } else {
+          dragonWrapper.style.opacity = '0';
+          dragonWrapper.style.pointerEvents = 'none'; // 隐藏时不能挡住鼠标点击
+        }
+        
         sync();
       }
       function sync() {
