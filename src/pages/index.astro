@@ -85,6 +85,15 @@ import DragonDashboard from '../components/DragonDashboard.astro';
       .dot { width: 10px; height: 10px; border-radius: 50%; }
       .dot-oxy { background: var(--highlight); } .dot-cash { background: #707a8a; }
 
+      /* 复制按钮样式 */
+      .btn-copy {
+        background: rgba(255,255,255,0.1); border: 1px solid var(--card-border);
+        color: var(--text-main); padding: 4px 10px; border-radius: 6px;
+        cursor: pointer; font-size: 0.8rem; transition: all 0.2s;
+        white-space: nowrap; margin-left: 10px;
+      }
+      .btn-copy:hover { background: var(--highlight); color: white; border-color: var(--highlight); }
+
       #vignette-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 800; background: radial-gradient(circle, transparent 50%, black 120%); opacity: 0; transition: opacity 0.1s linear; }
     </style>
   </head>
@@ -136,7 +145,7 @@ import DragonDashboard from '../components/DragonDashboard.astro';
             
             <!-- 这里更新了你最新写的博客预览 -->
             <div class="post-preview">
-              <a href="/blog/2026-02-19-oxy-surge" class="post-title">OXY 大涨：地缘摩擦与财报利好共振</a>
+              <a href="/blog/2026-02-19-oxy-surge" class="post-title">2026.02.19 OXY 大涨</a>
               <div class="post-date">2026.02.19 · 日常复盘</div>
               <div style="font-size:0.9rem; color:var(--text-sub); margin-top:5px;">
                 今日大量美军力量在中东集结，与此同时伊朗也开始海军演习... 布油站稳70，西方石油开盘大幅上涨9%。
@@ -209,10 +218,30 @@ import DragonDashboard from '../components/DragonDashboard.astro';
         <div class="card">
           <h2>⚡ 赞助 (Support)</h2>
           <p style="margin-bottom: 20px;">如果我的记录对你有帮助，欢迎投喂一点燃料：</p>
-          <div class="crypto-item"><div class="crypto-info"><i class="fab fa-monero" style="color:#f26822"></i> XMR</div><div class="crypto-addr">44AFF...Placeholder</div></div>
-          <div class="crypto-item"><div class="crypto-info"><i class="fas fa-cube" style="color:#00ffbd"></i> SOL</div><div class="crypto-addr">DnZw4...Placeholder</div></div>
-          <div class="crypto-item"><div class="crypto-info"><i class="fab fa-ethereum" style="color:#627eea"></i> ETH</div><div class="crypto-addr">0x71C...Placeholder</div></div>
-          <div class="crypto-item"><div class="crypto-info"><i class="fas fa-network-wired" style="color:#f3ba2f"></i> BSC</div><div class="crypto-addr">0x71C...Placeholder</div></div>
+          
+          <div class="crypto-item">
+            <div class="crypto-info"><i class="fab fa-monero" style="color:#f26822"></i> XMR</div>
+            <div class="crypto-addr" id="addr-xmr">85PxQVWoYHfWgKGEmH8ncJTmbdLSHvmBYWvxfMScgpeBJuUQ4yDg8xoPbfyUQvuaSNWw6psNbJubeAi5PDa22qPLUiYCQ4P</div>
+            <button class="btn-copy" onclick="copyAddress('addr-xmr', this)"><i class="far fa-copy"></i> 复制</button>
+          </div>
+          
+          <div class="crypto-item">
+            <div class="crypto-info"><i class="fas fa-cube" style="color:#00ffbd"></i> SOL</div>
+            <div class="crypto-addr" id="addr-sol">FVJHLtGDESQasGozYXw7xufbbe2tbAW7vWAhGE4pjqzS</div>
+            <button class="btn-copy" onclick="copyAddress('addr-sol', this)"><i class="far fa-copy"></i> 复制</button>
+          </div>
+          
+          <div class="crypto-item">
+            <div class="crypto-info"><i class="fab fa-ethereum" style="color:#627eea"></i> ETH</div>
+            <div class="crypto-addr" id="addr-eth">0x935C5D4086e44239bff110f0623c97E7D7c55824</div>
+            <button class="btn-copy" onclick="copyAddress('addr-eth', this)"><i class="far fa-copy"></i> 复制</button>
+          </div>
+          
+          <div class="crypto-item">
+            <div class="crypto-info"><i class="fas fa-network-wired" style="color:#f3ba2f"></i> BSC</div>
+            <div class="crypto-addr" id="addr-bsc">0x6A970263301Ac793B42c0fB7d11118051C9DC96C</div>
+            <button class="btn-copy" onclick="copyAddress('addr-bsc', this)"><i class="far fa-copy"></i> 复制</button>
+          </div>
         </div>
       </section>
 
@@ -229,6 +258,33 @@ import DragonDashboard from '../components/DragonDashboard.astro';
     </div>
 
     <script is:inline>
+      // --- 复制地址功能 ---
+      function copyAddress(elementId, btnElement) {
+        // 获取地址文本
+        const addrText = document.getElementById(elementId).innerText;
+        
+        // 调用系统剪贴板 API
+        navigator.clipboard.writeText(addrText).then(() => {
+          // 复制成功后的 UI 反馈
+          const originalHTML = btnElement.innerHTML;
+          btnElement.innerHTML = '<i class="fas fa-check"></i> 成功!';
+          btnElement.style.background = 'var(--profit)'; // 变成绿色
+          btnElement.style.color = 'white';
+          btnElement.style.borderColor = 'var(--profit)';
+          
+          // 2秒后恢复原样
+          setTimeout(() => {
+            btnElement.innerHTML = originalHTML;
+            btnElement.style.background = '';
+            btnElement.style.color = '';
+            btnElement.style.borderColor = '';
+          }, 2000);
+        }).catch(err => {
+          console.error('复制失败:', err);
+          alert("复制失败，请手动复制");
+        });
+      }
+      
       const vignette = document.getElementById('vignette-overlay');
       window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
