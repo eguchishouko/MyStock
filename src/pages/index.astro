@@ -1,7 +1,6 @@
 ---
 import TrendBackground from '../components/TrendBackground.astro';
 import DragonDashboard from '../components/DragonDashboard.astro';
-// --- 修复1：这里引入了最新版需要的 render 函数 ---
 import { getCollection, render } from 'astro:content';
 
 const allPosts = await getCollection('blog');
@@ -67,12 +66,12 @@ const sortedPosts = allPosts.sort(
       .post-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; }
       .post-title { margin: 0; font-size: 1.3rem; color: var(--highlight); font-weight: bold; text-decoration: none; }
       .post-date { font-size: 0.85rem; color: var(--text-sub); font-family: monospace; }
+      .btn-more { display: inline-block; margin-top: 15px; padding: 8px 20px; border: 1px solid var(--highlight); color: var(--highlight); border-radius: 20px; text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
+      .btn-more:hover { background: var(--highlight); color: white; }
       
       .prose { font-size: 1rem; line-height: 1.8; color: var(--text-sub); }
       .prose p { margin-top: 0; margin-bottom: 1em; }
       .prose strong { color: var(--text-main); font-weight: 600; }
-      .prose ul { padding-left: 20px; margin-top: 0; }
-      .prose li { margin-bottom: 5px; }
 
       .table-wrapper { overflow-x: auto; }
       table { width: 100%; border-collapse: collapse; white-space: nowrap; font-size: 0.95rem; table-layout: fixed; }
@@ -81,14 +80,34 @@ const sortedPosts = allPosts.sort(
       th { color: var(--text-sub); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
       .profit { color: var(--profit); font-weight: bold; } .loss { color: var(--loss); font-weight: bold; } .flat { color: var(--text-sub); }
 
-      .chart-container { display: flex; align-items: center; gap: 30px; margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 12px; }
-      .donut-chart { width: 100px; height: 100px; border-radius: 50%; background: conic-gradient(var(--highlight) 0% 97.6%, #707a8a 97.6% 100%); position: relative; display: flex; justify-content: center; align-items: center; }
-      .donut-chart::after { content: ""; position: absolute; width: 70px; height: 70px; background: var(--card-bg); border-radius: 50%; }
-      .chart-text { position: absolute; z-index: 1; font-size: 0.8rem; color: var(--text-sub); font-weight: bold; text-align: center; }
-      .chart-legend { display: flex; flex-direction: column; gap: 10px; }
-      .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
-      .dot { width: 10px; height: 10px; border-radius: 50%; }
-      .dot-oxy { background: var(--highlight); } .dot-cash { background: #707a8a; }
+      /* --- 重构的图表与统计区域 --- */
+      .portfolio-dashboard {
+        display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+        margin-top: 20px; padding: 25px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+      }
+      .chart-left { display: flex; align-items: center; gap: 30px; }
+      .donut-chart { 
+        width: 110px; height: 110px; border-radius: 50%; 
+        /* OXY 蓝色 97.6%, NVO 绿色 2.4% */
+        background: conic-gradient(var(--highlight) 0% 97.6%, var(--profit) 97.6% 100%); 
+        position: relative; display: flex; justify-content: center; align-items: center; 
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      }
+      .donut-chart::after { content: ""; position: absolute; width: 75px; height: 75px; background: var(--card-bg); border-radius: 50%; }
+      .chart-text { position: absolute; z-index: 1; font-size: 0.75rem; color: var(--text-sub); font-weight: bold; text-align: center; letter-spacing: 1px;}
+      .chart-legend { display: flex; flex-direction: column; gap: 12px; }
+      .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);}
+      .dot { width: 12px; height: 12px; border-radius: 3px; }
+      .dot-oxy { background: var(--highlight); } 
+      .dot-nvo { background: var(--profit); }
+      
+      /* 新增：右侧收益率统计 */
+      .chart-stats {
+        display: flex; flex-direction: column; gap: 15px;
+        padding-left: 25px; border-left: 1px dashed rgba(255,255,255,0.15);
+      }
+      .stat-item .stat-label { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;}
+      .stat-item .stat-value { font-size: 1.5rem; font-weight: 900; font-family: 'Courier New', monospace; }
 
       .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); z-index: 1000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; }
       .nav-user { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
@@ -146,7 +165,6 @@ const sortedPosts = allPosts.sort(
           <div class="feed-container">
             <h3 style="font-size:1rem; color:var(--text-sub); margin-bottom:25px;">📅 最新记录 (Latest)</h3>
             
-            <!-- 核心修改：加上 .slice(0, 3) 确保首页最多只显示 3 篇 -->
             {sortedPosts.slice(0, 3).map(async (post) => {
               const { Content } = await render(post);
               return (
@@ -163,11 +181,9 @@ const sortedPosts = allPosts.sort(
             })}
           </div>
 
-          <!-- 核心修改：恢复了“查看全部”的按钮 -->
           <div style="text-align: center; margin-top: 20px;">
             <a href="/blog" class="btn-more">查看所有历史记录 <i class="fas fa-arrow-right"></i></a>
           </div>
-
         </div>
       </section>
 
@@ -175,21 +191,38 @@ const sortedPosts = allPosts.sort(
         <div class="card">
           <h2>📊 交易战绩 (Trading)</h2>
           
-          <h3 style="color:var(--text-sub); margin-bottom:10px; margin-top:20px;">⏳ 持仓中 (Holding)</h3>
+          <h3 style="color:var(--text-sub); margin-bottom:10px; margin-top:20px;">⏳ 2026.02.24 持仓中 (Holding)</h3>
           <div class="table-wrapper">
             <table>
-              <thead><tr><th>代码</th><th>买入时间</th><th>当前状态</th></tr></thead>
+              <thead><tr><th>代码</th><th>建仓时间</th><th>当前状态</th></tr></thead>
               <tbody>
                 <tr><td><b>OXY</b></td><td>2026.02</td><td class="profit" style="color: var(--profit);">持有</td></tr>
+                <!-- 新增 NVO -->
+                <tr><td><b>NVO</b></td><td>2026.02</td><td class="flat">持有</td></tr>
               </tbody>
             </table>
           </div>
 
-          <div class="chart-container">
-            <div class="donut-chart"><div class="chart-text">PORTFOLIO</div></div>
-            <div class="chart-legend">
-              <div class="legend-item"><div class="dot dot-oxy"></div><div><b>OXY</b>: 97.6%</div></div>
-              <div class="legend-item"><div class="dot dot-cash"></div><div><b>Cash</b>: 2.4%</div></div>
+          <!-- 升级版的图表与收益统计区域 -->
+          <div class="portfolio-dashboard">
+            <div class="chart-left">
+              <div class="donut-chart"><div class="chart-text">ASSETS</div></div>
+              <div class="chart-legend">
+                <div class="legend-item"><div class="dot dot-oxy"></div><div><b>OXY</b>: 97.6%</div></div>
+                <div class="legend-item"><div class="dot dot-nvo"></div><div><b>NVO</b>: 2.4%</div></div>
+                <div class="legend-item" style="font-size: 0.8rem; color: #666; margin-top:-5px;">Margin Cash: -$0.24</div>
+              </div>
+            </div>
+            
+            <div class="chart-stats">
+              <div class="stat-item">
+                <div class="stat-label">绝对收益率 (Absolute)</div>
+                <div class="stat-value profit">+37.86%</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">年化收益率 (XIRR)</div>
+                <div class="stat-value profit">+81.54%</div>
+              </div>
             </div>
           </div>
 
