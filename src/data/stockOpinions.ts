@@ -15,14 +15,14 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Nvidia Corporation',
     sector: '科技',
     rating: 'BUY',
-    content: '作为现在全球市值第一的公司，GPU软硬件生态壁垒极其深厚。同业竞争者（如 Google TPU）短期内难以撼动算力垄断地位。在“七巨头 (Magnificent Seven)”中列为顺位第二的长期配置首选。'
+    content: '作为现在全球市值第一的公司，GPU 软硬件生态壁垒极其深厚。同业竞争者（如 Google TPU）短期内难以撼动算力垄断地位。在“七巨头 ( Magnificent Seven )”中列为顺位第二的长期配置首选。'
   },
   {
     symbol: 'GOOGL',
-    name: 'Alphabet Inc.',
+    name: 'Alphabet Inc',
     sector: '科技',
     rating: 'BUY',
-    content: '2026 Q1财报数据还是很好看的，但Capex支出过大，所以财报发布后一路跌，但从长远来看，基础设施的重资产投入是押注未来的积极信号。股价差不多是近一年来首次跌破了50日均线，由于前期估值扩张过快，当前正处于良性的挤泡沫阶段，短期承压，但基本面良好，长期看涨。纳斯达克前十的巨头长期最看好Google。'
+    content: '2026 Q1财报数据还是很好看的，但 Capex 支出过大，所以财报发布后一路跌，但从长远来看，基础设施的重资产投入是押注未来的积极信号。股价差不多是近一年来首次跌破了50日均线，由于前期估值扩张过快，当前正处于良性的挤泡沫阶段，短期承压，但基本面良好，长期看涨。纳斯达克前十的巨头长期最看好 Google 。'
   },
   {
     symbol: 'AAPL',
@@ -36,14 +36,14 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Microsoft Corp',
     sector: '科技',
     rating: 'STRONG BUY',
-    content: '2026 Q1财报其实并没有什么利空，各项数据都不错，Azure发展良好，Office和LinkedIn增长稳健，传统业务稳定增长，但股价就这么下来了。微软这种体量的公司，400以下的价格基本不需要太犹豫。'
+    content: '2026 Q1财报其实并没有什么利空，各项数据都不错，Azure发展良好，Office 和 LinkedIn 增长稳健，传统业务稳定增长，但股价就这么下来了。微软这种体量的公司，$400 以下的价格基本不需要太犹豫。'
   },
   {
     symbol: 'META',
     name: 'META Platforms, Inc.',
     sector: '科技',
     rating: 'SELL',
-    content: '如果说七巨头哪些公司相比其它公司有点掉队，我选META是其中一个。扎克伯格几年前宣布进军元宇宙，结果ChatGPT出现之后元宇宙就炒不起来了。LLM做了开源模型Llama, 第一年还能上桌，Deepseek和Qwen出来之后就找不着北，开上亿年薪挖人，20亿买下Manus，过了一周Anthropic就发布了Claude Code。OpenAI在26年要配得上万亿估值，肯定要抢广告的生意。广告市场存量博弈，Google最强，Meta最容易被抢。除了有巨大波动，不会考虑买入。'
+    content: '如果说七巨头哪些公司相比其它公司有点掉队，我选 META 是其中一个。扎克伯格几年前宣布进军元宇宙，结果 ChatGPT 出现之后元宇宙就炒不起来了。LLM 做了开源模型 Llama, 第一年还能上桌，Deepseek 和 Qwen 出来之后就找不着北，开上亿年薪挖人，20亿买下 Manus，过了一周 Anthropic 就发布了 Claude Code。OpenAI 在26年要配得上万亿估值，肯定要抢广告的生意。广告市场是存量博弈，Google在广告市场最根基深厚，还有自己的大模型，Meta 是最容易被抢的。除了有巨大波动，不会考虑买入。'
   },
   {
     symbol: 'AMZN',
