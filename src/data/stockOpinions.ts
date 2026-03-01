@@ -96,7 +96,7 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Occidental Petroleum',
     sector: '石油',
     rating: 'BUY',
-    content: '基于中东地缘政治摩擦，伊朗作为全球重要的产油国，如果Trump进攻伊朗，油价会立刻迅速上涨。所以，我需要的是弹性最大、对油价最敏感且流动性极高的股票，在石油公司里，相比Exxon Mobil  (XOM) 或Chevron  (CVX) 这种综合巨头，OXY 是纯粹的上游勘探与生产商，是巴菲特重仓股票（Berkshire Hathaway公司持有OXY约30%的股份），同时OXY 也是美国二叠纪盆地的最大地主之一，资产位于美国本土，不会受中东战争影响，能享受到油价上涨和“美国能源优先”政策的红利。'
+    content: '基于中东地缘政治摩擦，伊朗作为全球重要的产油国，如果Trump进攻伊朗，油价会立刻迅速上涨。所以，我需要的是弹性最大、对油价最敏感且流动性极高的股票，在石油公司里，相比Exxon Mobil  (XOM) 或Chevron  (CVX) 这种综合巨头，OXY 是纯粹的上游勘探与生产商，是巴菲特重仓股票（Berkshire Hathaway公司持有OXY约30%的股份），同时OXY也是美国二叠纪盆地的最大地主之一，资产位于美国本土，不会受中东战争影响，能享受到油价上涨和“美国能源优先”政策的红利。'
   },
 
   // --- 医疗保险 ---
