@@ -1,18 +1,18 @@
 ---
-// src/layouts/BaseLayout.astro
 import TrendBackground from '../components/TrendBackground.astro';
 const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title} | Lotuseater</title>
+    <title>{title} | Lotus-eater</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style is:global>
-      /* 全局变量，保持和首页一致 */
+      /* 全局变量 */
       :root {
         --text-main: #e0e0e0; --text-sub: #b0b3b8;
         --card-bg: rgba(22, 26, 30, 0.85); --card-border: rgba(255, 255, 255, 0.1);
@@ -25,53 +25,86 @@ const { title } = Astro.props;
         --highlight: #0052cc; --profit: #00796b; --loss: #d32f2f;
         --nav-bg: rgba(240, 242, 245, 0.9);
       }
-      body { margin: 0; padding-top: 80px; font-family: 'Segoe UI', Roboto, sans-serif; color: var(--text-main); background-color: #0b0e11; transition: background-color 0.3s; padding-bottom: 100px; overflow-x: hidden; }
+      body { margin: 0; padding-top: 80px; font-family: 'Segoe UI', Roboto, sans-serif; color: var(--text-main); background-color: #0b0e11; transition: background-color 0.3s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh;}
       body.light-mode { background-color: #f0f2f5; }
 
       /* Navbar */
-      .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); z-index: 1000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; }
-      .nav-user { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+      .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); z-index: 1000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; justify-content: space-between; }
+      .nav-user { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; flex-shrink: 0; }
       .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #2962ff, #ff3d00); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
       .username { font-weight: bold; font-size: 1.1rem; }
       
-      .nav-controls { margin-left: auto; display: flex; gap: 10px; }
+      .nav-menu { display: flex; gap: 25px; align-items: center; justify-content: center; flex: 1; }
+      .nav-link { color: var(--text-sub); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 6px; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+      .nav-link:hover { color: var(--text-main); }
+      .nav-link.active { color: var(--highlight); border-bottom-color: var(--highlight); }
+
+      .nav-controls { display: flex; gap: 10px; flex-shrink: 0; }
       .btn-toggle { background: transparent; border: 1px solid var(--card-border); color: var(--text-main); padding: 5px 12px; border-radius: 20px; cursor: pointer; display: flex; gap: 5px; align-items: center; transition: all 0.2s; white-space: nowrap; }
-      .btn-toggle:hover { background: rgba(200, 9, 9, 0.1); }
+      .btn-toggle:hover { background: rgba(255,255,255,0.1); }
       .btn-toggle.active { background: var(--highlight); color: white; border-color: var(--highlight); }
 
       /* Layout */
+      .main-content { flex: 1; } /* 让内容区撑开，把 footer 挤到底部 */
       .container { max-width: 850px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
       .card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid var(--card-border); border-radius: 16px; padding: 30px; margin-bottom: 20px; }
       a { color: var(--highlight); text-decoration: none; }
+
+      /* --- 博客正文的通用排版样式 (让你的文章更好看) --- */
+      .prose { font-size: 1.05rem; line-height: 1.8; color: var(--text-sub); }
+      .prose h1, .prose h2, .prose h3 { color: var(--text-main); margin-top: 1.5em; margin-bottom: 0.5em; }
+      .prose p { margin-top: 0; margin-bottom: 1.2em; }
+      .prose strong { color: var(--text-main); font-weight: 600; }
+      .prose ul, .prose ol { padding-left: 20px; margin-bottom: 1.2em; }
+      .prose li { margin-bottom: 5px; }
+      .prose blockquote { border-left: 4px solid var(--highlight); padding-left: 15px; margin-left: 0; color: #888; background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 0 8px 8px 0; }
+      .prose code { background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
+
+      /* Footer 样式 */
+      .site-footer { text-align: center; padding: 40px 20px; color: var(--text-sub); font-family: monospace; font-size: 0.9rem; border-top: 1px solid var(--card-border); margin-top: 40px; background: rgba(0,0,0,0.3); position: relative; z-index: 1; }
+
+      @media (max-width: 768px) { .nav-link span { display: none; } .nav-menu { gap: 15px; } }
     </style>
   </head>
   <body>
-    <!-- 引入 K线背景 -->
     <TrendBackground />
     
     <nav class="navbar">
-      <a href="/" class="nav-user">
-        <div class="avatar">L</div>
-        <div class="username">Lotuseater</div>
-      </a>
+      <a href="/" class="nav-user"><div class="avatar">L</div><div class="username">Lotuseater</div></a>
+      <div class="nav-menu">
+        <a href="/" class={currentPath === '/' ? 'nav-link active' : 'nav-link'}><i class="fas fa-home"></i> <span>首页</span></a>
+        <a href="/portfolio" class={currentPath === '/portfolio' ? 'nav-link active' : 'nav-link'}><i class="fas fa-chart-pie"></i> <span>战绩</span></a>
+        <a href="/opinions" class={currentPath === '/opinions' ? 'nav-link active' : 'nav-link'}><i class="fas fa-lightbulb"></i> <span>观点</span></a>
+        <a href="/blog" class={currentPath.includes('/blog') ? 'nav-link active' : 'nav-link'}><i class="fas fa-archive"></i> <span>归档</span></a>
+        <a href="/sponsor" class={currentPath === '/sponsor' ? 'nav-link active' : 'nav-link'}><i class="fas fa-bolt"></i> <span>充电</span></a>
+        <a href="/friends" class={currentPath === '/friends' ? 'nav-link active' : 'nav-link'}><i class="fas fa-link"></i> <span>友链</span></a>
+        <a href="/about" class={currentPath === '/about' ? 'nav-link active' : 'nav-link'}><i class="fas fa-user"></i> <span>关于</span></a>
+      </div>
       <div class="nav-controls">
         <button class="btn-toggle" onclick="toggleTheme()" id="btn-theme"><i class="fas fa-moon"></i></button>
-        <!-- 修复：这里之前漏掉了 K线开关 -->
+        <!-- 这里确保所有页面都有开关，但默认只有首页显示龙 -->
         <button class="btn-toggle active" onclick="toggleChart()" id="btn-chart"><i class="fas fa-chart-line"></i></button>
       </div>
     </nav>
 
-    <div class="container">
-      <slot />
-    </div>
+    <main class="main-content">
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+
+    <!-- 专属版权声明 -->
+    <footer class="site-footer">
+      &copy; 2026 Lotus-eater. All rights reserved.<br>
+      <span style="opacity: 0.6; font-size: 0.8rem; margin-top: 5px; display: inline-block;">Not Financial Advice. Do Your Own Research.</span>
+    </footer>
 
     <script is:inline>
-      // 这里的逻辑和首页保持一致，确保子页面也能控制K线
       let isDark = true;
       let isChart = true;
-      
       const btnTheme = document.getElementById('btn-theme');
       const btnChart = document.getElementById('btn-chart');
+      const dragonWrapper = document.getElementById('dragon-global-wrapper');
 
       function toggleTheme() {
         isDark = !isDark;
@@ -83,6 +116,10 @@ const { title } = Astro.props;
       function toggleChart() {
         isChart = !isChart;
         btnChart.classList.toggle('active');
+        if(dragonWrapper) {
+          dragonWrapper.style.opacity = isChart ? '1' : '0';
+          dragonWrapper.style.pointerEvents = isChart ? 'auto' : 'none';
+        }
         sync();
       }
 

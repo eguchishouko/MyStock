@@ -7,6 +7,9 @@ const allPosts = await getCollection('blog');
 const sortedPosts = allPosts.sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 );
+
+// --- 核心修复：定义 currentPath 变量，解决导航栏报错 ---
+const currentPath = Astro.url.pathname;
 ---
 
 <html lang="zh-CN">
@@ -81,7 +84,7 @@ const sortedPosts = allPosts.sort(
       th { color: var(--text-sub); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
       .profit { color: var(--profit); font-weight: bold; } .loss { color: var(--loss); font-weight: bold; } .flat { color: var(--text-sub); }
 
-      /* --- 重构的图表与统计区域 --- */
+      /* 重构的图表与统计区域 */
       .portfolio-dashboard {
         display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
         margin-top: 20px; padding: 25px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
@@ -89,7 +92,6 @@ const sortedPosts = allPosts.sort(
       .chart-left { display: flex; align-items: center; gap: 30px; }
       .donut-chart { 
         width: 110px; height: 110px; border-radius: 50%; 
-        /* OXY 蓝色 97.6%, NVO 绿色 2.4% */
         background: conic-gradient(var(--highlight) 0% 97.6%, var(--profit) 97.6% 100%); 
         position: relative; display: flex; justify-content: center; align-items: center; 
         box-shadow: 0 0 15px rgba(0,0,0,0.5);
@@ -102,7 +104,6 @@ const sortedPosts = allPosts.sort(
       .dot-oxy { background: var(--highlight); } 
       .dot-nvo { background: var(--profit); }
       
-      /* 新增：右侧收益率统计 */
       .chart-stats {
         display: flex; flex-direction: column; gap: 15px;
         padding-left: 25px; border-left: 1px dashed rgba(255,255,255,0.15);
@@ -110,14 +111,23 @@ const sortedPosts = allPosts.sort(
       .stat-item .stat-label { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;}
       .stat-item .stat-value { font-size: 1.5rem; font-weight: 900; font-family: 'Courier New', monospace; }
 
-      .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); z-index: 1000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; }
-      .nav-user { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+      /* --- 导航栏样式 --- */
+      .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); z-index: 1000; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; justify-content: space-between; }
+      .nav-user { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; flex-shrink: 0; }
       .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #2962ff, #ff3d00); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
       .username { font-weight: bold; font-size: 1.1rem; }
-      .nav-controls { margin-left: auto; display: flex; gap: 10px; flex-shrink: 0; }
+      
+      .nav-menu { display: flex; gap: 25px; align-items: center; justify-content: center; flex: 1; }
+      .nav-link { color: var(--text-sub); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 6px; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+      .nav-link:hover { color: var(--text-main); }
+      .nav-link.active { color: var(--highlight); border-bottom-color: var(--highlight); }
+
+      .nav-controls { display: flex; gap: 10px; flex-shrink: 0; }
       .btn-toggle { background: transparent; border: 1px solid var(--card-border); color: var(--text-main); padding: 5px 12px; border-radius: 20px; cursor: pointer; display: flex; gap: 5px; align-items: center; transition: all 0.2s; white-space: nowrap; }
       .btn-toggle:hover { background: rgba(255,255,255,0.1); }
       .btn-toggle.active { background: var(--highlight); color: white; border-color: var(--highlight); }
+
+      @media (max-width: 768px) { .nav-link span { display: none; } .nav-menu { gap: 15px; } }
 
       #vignette-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 800; background: radial-gradient(circle, transparent 50%, black 120%); opacity: 0; transition: opacity 0.1s linear; }
     </style>
@@ -130,10 +140,16 @@ const sortedPosts = allPosts.sort(
     <div id="vignette-overlay"></div>
 
     <nav class="navbar">
-      <a href="/" class="nav-user">
-        <div class="avatar">L</div>
-        <div class="username">Lotuseater</div>
-      </a>
+      <a href="/" class="nav-user"><div class="avatar">L</div><div class="username">Lotuseater</div></a>
+      <div class="nav-menu">
+        <a href="/" class={currentPath === '/' ? 'nav-link active' : 'nav-link'}><i class="fas fa-home"></i> <span>首页</span></a>
+        <a href="/portfolio" class="nav-link"><i class="fas fa-chart-pie"></i> <span>战绩</span></a>
+        <a href="/opinions" class="nav-link"><i class="fas fa-lightbulb"></i> <span>观点</span></a>
+        <a href="/blog" class="nav-link"><i class="fas fa-archive"></i> <span>归档</span></a>
+        <a href="/sponsor" class="nav-link"><i class="fas fa-bolt"></i> <span>充电</span></a>
+        <a href="/friends" class="nav-link"><i class="fas fa-link"></i> <span>友链</span></a>
+        <a href="/about" class="nav-link"><i class="fas fa-user"></i> <span>关于</span></a>
+      </div>
       <div class="nav-controls">
         <button class="btn-toggle" onclick="toggleTheme()" id="btn-theme"><i class="fas fa-moon"></i></button>
         <button class="btn-toggle active" onclick="toggleChart()" id="btn-chart"><i class="fas fa-chart-line"></i></button>
@@ -145,7 +161,7 @@ const sortedPosts = allPosts.sort(
       <section>
         <div class="card">
           <h1>简介 (Intro)</h1>
-          <p>这里是Lotus-eater的个人交易记录站，记录一些股票操作的记录，对各个公司股票的观点等。主要做美股市场，偶尔做期货和加密货币。
+          <p>这里是Lotus-eater的个人交易记录站，记录一些股票操作的记录，对各个公司股票的观点等。主要做美股市场，偶尔做期货和加密货币。</p>
           <p>我认为之前亏损太多，很大一部分原因就是复盘做的太少，对很多公司的思考缺乏准确的记录。所以计划在这里记录平常的思考，和每次股票的买入卖出时的想法。<br>写下来主要是为了<b>以此为镜，让自己更能理清逻辑</b>。</p>
         </div>
       </section>
@@ -198,13 +214,11 @@ const sortedPosts = allPosts.sort(
               <thead><tr><th>代码</th><th>建仓时间</th><th>当前状态</th></tr></thead>
               <tbody>
                 <tr><td><b>OXY</b></td><td>2026.02</td><td class="profit" style="color: var(--profit);">持有</td></tr>
-                <!-- 新增 NVO -->
                 <tr><td><b>NVO</b></td><td>2026.02</td><td class="flat">持有</td></tr>
               </tbody>
             </table>
           </div>
 
-          <!-- 升级版的图表与收益统计区域 -->
           <div class="portfolio-dashboard">
             <div class="chart-left">
               <div class="donut-chart"><div class="chart-text">ASSETS</div></div>
@@ -264,8 +278,7 @@ const sortedPosts = allPosts.sort(
         </div>
       </section>
 
-      <div style="height: 400px; display:flex; align-items:center; justify-content:center; color: #333;">
-        [ 是的，翻到这里就是爆仓了。虽然往上翻还能涨回去，但爆仓了再涨回去还有意义吗？ ]
+      <div style="height: 400px; display:flex; align-items:center; justify-content:center; color: #333; font-family: monospace; letter-spacing: 1px;">[ 是的，翻到这里就是爆仓了。虽然往上翻还能涨回去，但爆仓了再涨回去还有意义吗？ ]
       </div>
     </div>
 

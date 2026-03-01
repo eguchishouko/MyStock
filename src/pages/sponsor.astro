@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="充电支持">
+  <div class="card">
+    <h1 style="margin-top:0;">⚡ 充电 (Sponsor)</h1>
+    <p>如果我的文字或观点有帮到你或者让你感到不错，欢迎投喂一点燃料。</p>
+    <p>谢谢！</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0; color:var(--text-main);">加密货币地址</h3>
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+      
+      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fab fa-monero" style="color:#f26822; font-size:1.2rem;"></i> XMR</div>
+        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-xmr">85PxQVWoYHfWgKGEmH8ncJTmbdLSHvmBYWvxfMScgpeBJuUQ4yDg8xoPbfyUQvuaSNWw6psNbJubeAi5PDa22qPLUiYCQ4P</div>
+        <button class="btn-copy" onclick="copyAddress('addr-xmr', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fas fa-cube" style="color:#00ffbd; font-size:1.2rem;"></i> SOL</div>
+        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-sol">FVJHLtGDESQasGozYXw7xufbbe2tbAW7vWAhGE4pjqzS</div>
+        <button class="btn-copy" onclick="copyAddress('addr-sol', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fab fa-ethereum" style="color:#627eea; font-size:1.2rem;"></i> ETH</div>
+        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-eth">0x935C5D4086e44239bff110f0623c97E7D7c55824</div>
+        <button class="btn-copy" onclick="copyAddress('addr-eth', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fas fa-network-wired" style="color:#f3ba2f; font-size:1.2rem;"></i> BSC</div>
+        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-bsc">0x6A970263301Ac793B42c0fB7d11118051C9DC96C</div>
+        <button class="btn-copy" onclick="copyAddress('addr-bsc', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script is:inline>
+    function copyAddress(elementId, btnElement) {
+      const addrText = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(addrText).then(() => {
+        const originalHTML = btnElement.innerHTML;
+        btnElement.innerHTML = '成功';
+        btnElement.style.background = '#00c853';
+        btnElement.style.borderColor = '#00c853';
+        setTimeout(() => {
+          btnElement.innerHTML = originalHTML;
+          btnElement.style.background = 'rgba(255,255,255,0.1)';
+          btnElement.style.borderColor = 'var(--card-border)';
+        }, 2000);
+      });
+    }
+  </script>
+</BaseLayout>

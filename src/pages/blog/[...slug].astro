@@ -1,20 +1,41 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// 获取所有文章，生成对应的路由路径
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
 	return posts.map((post) => ({
-		params: { slug: post.id },
+		params: { slug: post.id }, 
 		props: post,
 	}));
 }
-type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<!-- 把内容塞进我们刚才做好的完美外壳里 -->
+<BaseLayout title={post.data.title}>
+  <div class="card" style="margin-top: 20px; min-height: 60vh;">
+    
+    <!-- 面包屑导航，方便返回 -->
+    <a href="/blog" style="font-size:0.9rem; color:var(--text-sub); text-decoration:none;">
+      <i class="fas fa-arrow-left"></i> 返回归档
+    </a>
+    
+    <!-- 标题和日期 -->
+    <h1 style="margin-top: 20px; margin-bottom: 10px; color: var(--highlight); font-size: 2.2rem;">
+      {post.data.title}
+    </h1>
+    <div style="font-family: monospace; color: var(--text-sub); margin-bottom: 30px; border-bottom: 1px dashed var(--card-border); padding-bottom: 15px;">
+      <i class="far fa-calendar-alt"></i> {post.data.pubDate.toLocaleDateString('zh-CN')}
+    </div>
+    
+    <!-- 正文渲染区 (这里的 .prose 类会调用 BaseLayout 里的排版样式) -->
+    <article class="prose">
+      <Content />
+    </article>
+    
+  </div>
+</BaseLayout>
