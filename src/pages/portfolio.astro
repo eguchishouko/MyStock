@@ -15,8 +15,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">历史胜率 (Win Rate)</div>
-      <div class="kpi-value">50.0%</div>
-      <div class="kpi-sub">4 盈利 / 4 亏损</div>
+      <div class="kpi-value">55.56%</div>
+      <div class="kpi-sub">5 盈利 / 4 亏损</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">最佳交易 (Best Trade)</div>
@@ -51,7 +51,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <thead><tr style="border-bottom: 1px solid var(--card-border);"><th style="padding:12px; color:var(--text-sub);">代码</th><th style="padding:12px; color:var(--text-sub);">交易时间</th><th style="padding:12px; color:var(--text-sub);">当前状态</th></tr></thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--card-border);">
-            <td style="padding:12px;"><b>OXY</b></td><td style="padding:12px;">2026.02</td><td style="padding:12px; color: var(--profit); font-weight:bold;">持有</td>
+            <td style="padding:12px;"><b>CASH</b></td><td style="padding:12px;">2026.03</td><td style="padding:12px; color: var(--profit); font-weight:bold;">现金</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--card-border);">
             <td style="padding:12px;"><b>NVO</b></td><td style="padding:12px;">2026.02</td><td style="padding:12px; color: var(--text-sub);">持有</td>
@@ -68,14 +68,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div style="position: absolute; z-index: 1; font-size: 0.75rem; color: var(--text-sub); font-weight: bold; text-align: center; letter-spacing: 1px;">ASSETS</div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--highlight);"></div><div><b>OXY</b>: 97.6%</div></div>
-          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--profit);"></div><div><b>NVO</b>: 2.4%</div></div>
-          <div style="font-size: 0.8rem; color: var(--text-sub); margin-top:-5px;">Margin Cash: -$0.24</div>
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--highlight);"></div><div><b>CASH</b>: 98.04%</div></div>
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--profit);"></div><div><b>NVO</b>: 1.96%</div></div>
         </div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 15px; padding-left: 25px; border-left: 1px dashed var(--card-border);">
-        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">绝对收益率 (Absolute)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+46.75%</div></div>
-        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">年化收益率 (XIRR)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+98.35%</div></div>
+        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">绝对收益率 (Absolute)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+39.12%</div></div>
+        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">年化收益率 (XIRR)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+80.16%</div></div>
       </div>
     </div>
   </div>
@@ -89,6 +88,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <tbody>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>AAL</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+21.15%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>GOOGL</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+18.09%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
+          <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>GOOGL</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+16.53%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>TSLA</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+8.47%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>UNH</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+0.84%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>NKE</b></td><td style="padding:12px; color: var(--loss); font-weight:bold;">-5.81%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
