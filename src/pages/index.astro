@@ -271,12 +271,87 @@ const currentPath = Astro.url.pathname;
         </div>
       </section>
 
+    <!-- 友链展示区 (首页精简版) -->
       <section>
-        <div class="card">
-          <h2>🔗 友链 (Friends)</h2>
-          <p style="text-align: center; color: var(--text-sub); padding: 20px;">(虚位以待 / Waiting for listing)</p>
+       <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
+        <h2 style="margin: 0;">🔗 友链 (Friends)</h2>
+        <a href="/friends" style="font-size: 0.9rem; color: var(--text-sub); text-decoration: none; transition: color 0.2s;">查看更多 <i class="fas fa-angle-right"></i></a>
+      </div>
+    
+    <div class="index-friends-grid">
+      <a href="https://fuyaoskyrocket.ing" target="_blank" rel="noopener noreferrer" class="index-friend-card">
+        <img src="https://github.com/skyrocketingHong.png" alt="扶摇" class="index-friend-avatar" />
+        <div class="index-friend-info">
+          <div class="index-friend-name">扶摇skyrocketing</div>
+          <div class="index-friend-desc">尝试在互联网上留下一些属于自己的痕迹</div>
         </div>
-      </section>
+      </a>
+      
+      <a href="https://imyan.ren" target="_blank" rel="noopener noreferrer" class="index-friend-card">
+        <img src="https://github.com/yanren1225.png" alt="Yanren" class="index-friend-avatar" />
+        <div class="index-friend-info">
+          <div class="index-friend-name">I'm Yanren</div>
+          <div class="index-friend-desc">nice -20 Game && nice 19 Code</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+ <!-- 首页友链专属样式 -->
+  <style>
+   .index-friends-grid {
+     display: grid; 
+     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+     gap: 15px; 
+  }
+  .index-friend-card {
+    display: flex; 
+    align-items: center; 
+    gap: 12px;
+    background: rgba(255,255,255,0.03); 
+    border: 1px solid var(--card-border);
+    padding: 12px; 
+    border-radius: 10px; 
+    text-decoration: none; 
+    transition: all 0.3s;
+  }
+  .index-friend-card:hover { 
+    transform: translateY(-3px); 
+    border-color: var(--highlight); 
+    background: rgba(255,255,255,0.06); 
+  }
+  .index-friend-avatar { 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    background-color: #222; 
+    flex-shrink: 0;
+  }
+  .index-friend-info { 
+    flex: 1; 
+    overflow: hidden; 
+  }
+  .index-friend-name { 
+    color: var(--text-main); 
+    font-weight: bold; 
+    font-size: 1rem; 
+    margin-bottom: 2px; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+  /* 首页为了排版紧凑，描述文字强制显示为一行并加省略号 */
+  .index-friend-desc { 
+    color: var(--text-sub); 
+    font-size: 0.8rem; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+  }
+</style>
 
       <div style="height: 400px; display:flex; align-items:center; justify-content:center; color: #333; font-family: monospace; letter-spacing: 1px;">[ 是的，翻到这里就是爆仓了。虽然往上翻还能涨回去，但爆仓了再涨回去还有意义吗？ ]
       </div>
