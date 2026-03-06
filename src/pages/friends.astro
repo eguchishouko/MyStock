@@ -1,55 +1,149 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// --- 更新的友链数据 ---
+// 只要在这里按格式添加，页面就会自动生成对应的卡片
+const friends =[
+  { 
+    name: '扶摇skyrocketing', 
+    desc: '尝试在互联网上留下一些属于自己的痕迹', 
+    link: 'https://fuyaoskyrocket.ing', 
+    avatar: 'https://github.com/skyrocketingHong.png' 
+  },
+  { 
+    name: 'I\'m Yanren', 
+    desc: 'nice -20 Game & nice 19 Code', 
+    link: 'https://imyan.ren', 
+    avatar: 'https://github.com/yanren1225.png' 
+  },
+];
 ---
 
 <BaseLayout title="友情链接">
+  <!-- 头部介绍 -->
   <div class="card">
     <h1 style="margin-top:0;">🔗 友链 (Friends)</h1>
     <p>我还能够再次在市场上，在市场这个世界上战斗下去吗？</p>
   </div>
 
-  <!-- 友链列表 (占位符) -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
-    
-    <a href="#" class="friend-card">
-      <div class="friend-avatar">U</div>
-      <div class="friend-info">
-        <div class="friend-name">Unknown Trader</div>
-        <div class="friend-desc">Waiting for someone...</div>
-      </div>
-    </a>
-
+  <!-- 真实的友链列表 -->
+  <div class="friends-grid">
+    {friends.map(friend => (
+      <a href={friend.link} target="_blank" rel="noopener noreferrer" class="friend-card">
+        <!-- 核心修改：使用 <img> 标签展示真实头像，如果加载失败有个 fallback 背景色 -->
+        <img src={friend.avatar} alt={friend.name} class="friend-avatar-img" />
+        
+        <div class="friend-info">
+          <div class="friend-name">{friend.name}</div>
+          <div class="friend-desc" title={friend.desc}>{friend.desc}</div>
+        </div>
+      </a>
+    ))}
   </div>
 
-  <!-- 申请友链说明 -->
+  <!-- 申请友链与留言板区域 -->
   <div class="card">
     <h2 style="border-bottom: 2px solid var(--highlight); display: inline-block; padding-bottom: 5px; margin-top: 0;">申请友链</h2>
     <p>欢迎与我交换友链！</p>
-    <p style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; font-family: monospace; border-left: 3px solid var(--highlight);">
-      可以通过社交媒体与我联系，发送您的网站信息和简短介绍。本站信息: <br><br>
-      博客名：Lotuseater的交易记录站<br>
+    
+    <div class="apply-box">
+      可以通过社交媒体与我联系，发送您的网站信息和简短介绍。本站信息：<br><br>
+      博客名：Lotus-eater 的交易记录站<br>
       简介：一个普通非专业交易员的股票交易记录<br>
       链接：https://lotuseater.xyz<br>
       图标：https://lotuseater.xyz/favicon.png
-    </p>
-    
+    </div>
+
     <!-- 留言板占位符 -->
     <div style="margin-top: 30px; padding: 30px; border: 1px dashed var(--card-border); border-radius: 8px; text-align: center; color: var(--text-sub);">
       <i class="fas fa-comments" style="font-size: 2rem; margin-bottom: 10px; display: block; opacity: 0.5;"></i>
-      [ 留言板评论系统 还没有做好 ]
+      [ 留言板评论系统 没有做好 ]
     </div>
   </div>
 
   <style>
-    .friend-card {
-      display: flex; align-items: center; gap: 15px;
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      padding: 15px; border-radius: 12px; text-decoration: none; transition: transform 0.2s, border-color 0.2s;
+    /* 友链网格布局 */
+    .friends-grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+      gap: 20px; 
+      margin-bottom: 40px;
     }
-    .friend-card:hover { transform: translateY(-3px); border-color: var(--highlight); }
-    .friend-avatar { width: 50px; height: 50px; border-radius: 50%; background: #444; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; color: white; flex-shrink: 0; }
-    .friend-info { flex: 1; overflow: hidden; }
-    .friend-name { color: var(--text-main); font-weight: bold; font-size: 1.1rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .friend-desc { color: var(--text-sub); font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* 友链卡片样式 */
+    .friend-card {
+      display: flex; 
+      align-items: center; 
+      gap: 15px;
+      background: rgba(255,255,255,0.03); 
+      border: 1px solid var(--card-border);
+      padding: 16px; 
+      border-radius: 12px; 
+      text-decoration: none; 
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    /* 卡片悬停特效：微微上浮，边框发光，背景变亮 */
+    .friend-card:hover { 
+      transform: translateY(-4px); 
+      border-color: var(--highlight); 
+      background: rgba(255,255,255,0.06); 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* 真实的头像图片样式 */
+    .friend-avatar-img { 
+      width: 55px; 
+      height: 55px; 
+      border-radius: 50%; 
+      object-fit: cover; /* 保证图片不变形 */
+      border: 2px solid rgba(255,255,255,0.1);
+      flex-shrink: 0; 
+      background-color: #222; /* 图片加载出来前的底色 */
+    }
+
+    /* 文本信息区 */
+    .friend-info { 
+      flex: 1; 
+      overflow: hidden; 
+    }
+    .friend-name { 
+      color: var(--text-main); 
+      font-weight: bold; 
+      font-size: 1.1rem; 
+      margin-bottom: 4px; 
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis; 
+    }
+    .friend-desc { 
+      color: var(--text-sub); 
+      font-size: 0.85rem; 
+      display: -webkit-box; 
+      -webkit-line-clamp: 2; /* 限制最多显示两行 */
+      -webkit-box-orient: vertical; 
+      overflow: hidden; 
+      line-height: 1.4; 
+    }
+    
+    /* 申请友链代码框样式 */
+    .apply-box {
+      background: rgba(0,0,0,0.2); 
+      padding: 20px; 
+      border-radius: 8px; 
+      font-family: 'Courier New', Courier, monospace; 
+      border-left: 4px solid var(--highlight); 
+      margin-bottom: 30px; 
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* 留言板区域上方留白和虚线 */
+    .giscus-container { 
+      margin-top: 40px; 
+      padding-top: 30px; 
+      border-top: 1px dashed var(--card-border); 
+    }
   </style>
 </BaseLayout>
