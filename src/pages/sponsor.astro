@@ -3,56 +3,204 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="充电支持">
+  <!-- 头部介绍 -->
   <div class="card">
     <h1 style="margin-top:0;">⚡ 充电 (Sponsor)</h1>
-    <p>如果我的文字或观点有帮到你或者让你感到不错，欢迎投喂一点燃料。</p>
+    <p>如果我的文字或观点有帮到你或者让你感到不错，欢迎支持。</p>
     <p>谢谢！</p>
   </div>
 
+  <!-- 新增：转账须知警示框 -->
+  <div class="card" style="border-left: 4px solid var(--highlight); background: rgba(41, 98, 255, 0.05);">
+    <h3 style="color:var(--highlight); margin-top:0; margin-bottom:15px;">
+      <i class="fas fa-info-circle"></i> 转账须知 (Important)
+    </h3>
+    <ul style="color: var(--text-main); font-size: 0.95rem; line-height: 1.8; padding-left: 20px; margin: 0;">
+      <li>加密货币转账<b>无法撤回</b>，请务必在交易所提币时核对好 <b>网络 (Network)</b>。</li>
+      <li>如果你想打赏 <b>USDT</b> 或 <b>USDC</b> 稳定币，强烈推荐使用 <b>SOL</b> 或 <b>BSC</b> 网络，手续费极低。</li>
+      <li>暂未提供原生 BTC 地址。如需支持，建议折算为稳定币打入以下地址。</li>
+    </ul>
+  </div>
+
+  <!-- 钱包地址卡片区 -->
   <div class="card">
-    <h3 style="margin-top:0; color:var(--text-main);">加密货币地址</h3>
-    <div style="display:flex; flex-direction:column; gap:10px; margin-top:20px;">
+    <h3 style="margin-top:0; margin-bottom:20px; color:var(--text-main);">加密货币接收地址</h3>
+    
+    <div style="display:flex; flex-direction:column; gap:20px;">
       
-      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fab fa-monero" style="color:#f26822; font-size:1.2rem;"></i> XMR</div>
-        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-xmr">85PxQVWoYHfWgKGEmH8ncJTmbdLSHvmBYWvxfMScgpeBJuUQ4yDg8xoPbfyUQvuaSNWw6psNbJubeAi5PDa22qPLUiYCQ4P</div>
-        <button class="btn-copy" onclick="copyAddress('addr-xmr', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      <!-- XMR 卡片 -->
+      <div class="crypto-detail-card">
+        <div class="crypto-header">
+          <div class="crypto-title"><i class="fab fa-monero" style="color:#f26822;"></i> Monero (XMR)</div>
+          <div class="crypto-tags"><span class="tag">主网 (Monero)</span></div>
+        </div>
+        <div class="crypto-desc">支持资产：仅支持原生 <b>XMR</b>。</div>
+        <div class="crypto-action">
+          <div class="crypto-addr" id="addr-xmr">85PxQVWoYHfWgKGEmH8ncJTmbdLSHvmBYWvxfMScgpeBJuUQ4yDg8xoPbfyUQvuaSNWw6psNbJubeAi5PDa22qPLUiYCQ4P</div>
+          <button class="btn-copy" onclick="copyAddress('addr-xmr', this)"><i class="far fa-copy"></i> 复制</button>
+        </div>
       </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fas fa-cube" style="color:#00ffbd; font-size:1.2rem;"></i> SOL</div>
-        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-sol">FVJHLtGDESQasGozYXw7xufbbe2tbAW7vWAhGE4pjqzS</div>
-        <button class="btn-copy" onclick="copyAddress('addr-sol', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      <!-- SOL 卡片 -->
+      <div class="crypto-detail-card">
+        <div class="crypto-header">
+          <div class="crypto-title"><i class="fas fa-cube" style="color:#00ffbd;"></i> Solana (SOL)</div>
+          <div class="crypto-tags"><span class="tag">网络: Solana</span></div>
+        </div>
+        <div class="crypto-desc">支持资产：<b>SOL</b>, <b>USDT</b> (SPL格式), <b>USDC</b> (SPL格式)。<br><span style="font-size:0.8rem; color:var(--text-sub);">* 到账极快，网络手续费几乎为零。</span></div>
+        <div class="crypto-action">
+          <div class="crypto-addr" id="addr-sol">FVJHLtGDESQasGozYXw7xufbbe2tbAW7vWAhGE4pjqzS</div>
+          <button class="btn-copy" onclick="copyAddress('addr-sol', this)"><i class="far fa-copy"></i> 复制</button>
+        </div>
       </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fab fa-ethereum" style="color:#627eea; font-size:1.2rem;"></i> ETH</div>
-        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-eth">0x935C5D4086e44239bff110f0623c97E7D7c55824</div>
-        <button class="btn-copy" onclick="copyAddress('addr-eth', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      <!-- ETH 卡片 -->
+      <div class="crypto-detail-card">
+        <div class="crypto-header">
+          <div class="crypto-title"><i class="fab fa-ethereum" style="color:#627eea;"></i> Ethereum (ETH)</div>
+          <div class="crypto-tags"><span class="tag">网络: ERC20</span></div>
+        </div>
+        <div class="crypto-desc">支持资产：<b>ETH</b>, <b>USDT</b> (ERC20), <b>USDC</b> (ERC20)。<br><span style="font-size:0.8rem; color:var(--loss);">* 警告：以太坊主网 Gas 费通常较高，小额打赏不建议走此网络。</span></div>
+        <div class="crypto-action">
+          <div class="crypto-addr" id="addr-eth">0x935C5D4086e44239bff110f0623c97E7D7c55824</div>
+          <button class="btn-copy" onclick="copyAddress('addr-eth', this)"><i class="far fa-copy"></i> 复制</button>
+        </div>
       </div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
-        <div style="display: flex; align-items: center; gap: 10px; font-weight: 500; width: 80px;"><i class="fas fa-network-wired" style="color:#f3ba2f; font-size:1.2rem;"></i> BSC</div>
-        <div style="flex-grow: 1; font-family: monospace; font-size: 0.85rem; opacity: 0.8; word-break: break-all;" id="addr-bsc">0x6A970263301Ac793B42c0fB7d11118051C9DC96C</div>
-        <button class="btn-copy" onclick="copyAddress('addr-bsc', this)" style="background:rgba(255,255,255,0.1); border:1px solid var(--card-border); color:white; padding:6px 12px; border-radius:6px; cursor:pointer; margin-left:15px; white-space:nowrap;">复制</button>
+      <!-- BSC 卡片 -->
+      <div class="crypto-detail-card">
+        <div class="crypto-header">
+          <div class="crypto-title"><i class="fas fa-network-wired" style="color:#f3ba2f;"></i> BNB Smart Chain (BSC)</div>
+          <div class="crypto-tags"><span class="tag">网络: BEP20</span></div>
+        </div>
+        <div class="crypto-desc">支持资产：<b>BNB</b>, <b>USDT</b> (BEP20), <b>USDC</b> (BEP20)。</div>
+        <div class="crypto-action">
+          <div class="crypto-addr" id="addr-bsc">0x6A970263301Ac793B42c0fB7d11118051C9DC96C</div>
+          <button class="btn-copy" onclick="copyAddress('addr-bsc', this)"><i class="far fa-copy"></i> 复制</button>
+        </div>
       </div>
 
     </div>
   </div>
 
+  <style>
+    /* 升级版的加密货币卡片样式 */
+    .crypto-detail-card {
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .crypto-detail-card:hover {
+      border-color: var(--highlight);
+      background: rgba(41, 98, 255, 0.05);
+    }
+    
+    .crypto-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .crypto-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .crypto-title i {
+      font-size: 1.5rem;
+      width: 25px;
+      text-align: center;
+    }
+    
+    .crypto-tags { display: flex; gap: 8px; }
+    .tag { 
+      font-size: 0.75rem; 
+      padding: 3px 8px; 
+      border-radius: 4px; 
+      background: rgba(255,255,255,0.1); 
+      color: var(--text-sub); 
+      font-weight: bold; 
+      letter-spacing: 0.5px;
+    }
+
+    .crypto-desc {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    .crypto-desc b { color: var(--text-main); }
+
+    .crypto-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0,0,0,0.3);
+      padding: 10px 15px;
+      border-radius: 8px;
+      gap: 15px;
+    }
+    .crypto-addr {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      word-break: break-all;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+    .btn-copy {
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: bold;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-copy:hover {
+      background: var(--highlight);
+      color: white;
+      border-color: var(--highlight);
+    }
+    
+    /* 移动端适配：地址过长时按钮放在下方 */
+    @media (max-width: 600px) {
+      .crypto-action { flex-direction: column; align-items: stretch; }
+      .btn-copy { width: 100%; text-align: center; margin-top: 10px; }
+    }
+  </style>
+
   <script is:inline>
+    // 增强版复制脚本
     function copyAddress(elementId, btnElement) {
       const addrText = document.getElementById(elementId).innerText;
       navigator.clipboard.writeText(addrText).then(() => {
         const originalHTML = btnElement.innerHTML;
-        btnElement.innerHTML = '成功';
-        btnElement.style.background = '#00c853';
-        btnElement.style.borderColor = '#00c853';
+        // 变成绿色并显示成功
+        btnElement.innerHTML = '<i class="fas fa-check"></i> 复制成功';
+        btnElement.style.background = 'var(--profit)';
+        btnElement.style.color = 'white';
+        btnElement.style.borderColor = 'var(--profit)';
+        
+        // 2.5秒后恢复原样
         setTimeout(() => {
           btnElement.innerHTML = originalHTML;
-          btnElement.style.background = 'rgba(255,255,255,0.1)';
-          btnElement.style.borderColor = 'var(--card-border)';
-        }, 2000);
+          btnElement.style.background = '';
+          btnElement.style.color = '';
+          btnElement.style.borderColor = '';
+        }, 2500);
+      }).catch(err => {
+        console.error('复制失败:', err);
+        alert("浏览器阻止了复制操作，请手动选中复制。");
       });
     }
   </script>
