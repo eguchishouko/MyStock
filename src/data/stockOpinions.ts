@@ -57,7 +57,7 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Tesla, Inc.',
     sector: '科技',
     rating: 'SELL',
-    content: '一开始是造电动汽车，现在还有机器人业务，15000亿的市值，380倍的超高市盈率，只看这家公司的基本面，是完全无法支撑这么高的股价的。股价能有这么高完全是因为CEO是Elon Musk。Tesla比起一个造车公司，更像是“马斯克概念股”。据说2026年SpaceX要携Xai上市，可能转移流动性，抽血Tesla的存量炒作资金。不看好。'
+    content: '特斯拉，一开始是造电动汽车，现在还有机器人业务，15000亿的市值，380倍的超高市盈率，只看这家公司的基本面，是完全无法支撑这么高的股价的。股价能有这么高完全是因为CEO是Elon Musk。Tesla比起一个造车公司，更像是“马斯克概念股”。据说2026年SpaceX要携Xai上市，可能转移流动性，抽血Tesla的存量炒作资金。不看好。'
   },
   {
     symbol: 'LITE',
@@ -94,7 +94,7 @@ export const stockOpinions: StockOpinion[] = [
     name: 'MicroStrategy Inc.',
     sector: '数字资产',
     rating: 'STRONG SELL',
-    content: '原本是做企业软件的公司，现在基本是带杠杆的BTC ETF。股价走势与BTC高度绑定，且波动性还大于BTC。从资产配置效率来看，直接持有 BTC 自行加杠杆显然是更优解。'
+    content: '原本是做企业软件的公司，现在基本是带杠杆的 BTC ETF。股价走势与 BTC 高度绑定，且波动性还大于 BTC。从资产配置效率来看，直接持有 BTC 自行加杠杆显然是更优解。'
   },
 
   // --- 石油 ---
@@ -103,7 +103,7 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Occidental Petroleum',
     sector: '石油',
     rating: 'BUY',
-    content: '西方石油公司，基于中东地缘政治摩擦，伊朗作为全球重要的产油国，如果Trump进攻伊朗，油价会立刻迅速上涨。所以，我需要的是弹性最大、对油价最敏感且流动性极高的股票，在石油公司里，相比Exxon Mobil  (XOM) 或Chevron  (CVX) 这种综合巨头，OXY 是纯粹的上游勘探与生产商，是巴菲特重仓股票（Berkshire Hathaway公司持有OXY约30%的股份），同时OXY也是美国二叠纪盆地的最大地主之一，资产位于美国本土，不会受中东战争影响，能享受到油价上涨和“美国能源优先”政策的红利。'
+    content: '西方石油公司，在石油公司里，相比 XOM (Exxon Mobil Corporation, 埃克森美孚) 或 CVX (Chevron Corporation, 雪佛龙) 这种综合巨头，OXY 是纯粹的上游勘探与生产商，股价对油价非常敏感。是巴菲特重仓股票（Berkshire Hathaway公司持有OXY约30%的股份），同时OXY 也是Permian Basin 最大生产商，这个油田也是全球最赚钱的油田之一，公司也大量投资新技术例如空气捕碳，碳封存等等，如果未来碳市场发展，这会是新的利润来源。是个值得中短期持有的周期股。'
   },
 
   // --- 医疗保险 ---
@@ -134,14 +134,14 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Gold Futures',
     sector: '期货',
     rating: 'HOLD',
-    content: '黄金，贯穿历史的天然货币与终极避险资产。一月涨的太多了，就算有回调，现在还是在50日均线以上。伊朗跟美伊一打，现在还在涨，快到前高了，又考虑到全球法币的信用，长期看多，适合作为投资组合的压舱石。'
+    content: '黄金，贯穿历史的天然货币与终极避险资产。现在世界上的形式并不好，所以就算有回调，现在还是在50日均线以上。伊朗跟美以一打，还要继续涨，至少跌不下去，再考虑到全球法币的信用，长期看多，适合作为投资组合的压舱石。'
   },
   {
     symbol: 'SILVER',
     name: 'Silver Futures',
     sector: '期货',
     rating: 'SELL',
-    content: '白银，几乎和黄金一样出名的资产，但前段时间涨太多了。跟黄金不同，银可以是工业产品，超过100严重偏离产业基本面，后续会继续回调到适合的位置。'
+    content: '白银，几乎和黄金一样出名的资产。但白银跟黄金不同，银可以是工业产品，前段时间涨太多了。超过100严重偏离产业基本面，后续会继续回调到适合的位置。'
   },
 
   // --- Crypto ---
