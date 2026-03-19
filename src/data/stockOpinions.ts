@@ -103,7 +103,7 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Occidental Petroleum',
     sector: '石油',
     rating: 'BUY',
-    content: '西方石油公司，在石油公司里，相比 XOM (Exxon Mobil Corporation, 埃克森美孚) 或 CVX (Chevron Corporation, 雪佛龙) 这种综合巨头，OXY 是纯粹的上游勘探与生产商，股价对油价非常敏感。是巴菲特重仓股票（Berkshire Hathaway公司持有OXY约30%的股份），同时OXY 也是Permian Basin 最大生产商，这个油田也是全球最赚钱的油田之一，公司也大量投资新技术例如空气捕碳，碳封存等等，如果未来碳市场发展，这会是新的利润来源。是个值得中短期持有的周期股。'
+    content: '西方石油公司，在石油公司里，相比 XOM (Exxon Mobil Corporation, 埃克森美孚) 或 CVX (Chevron Corporation, 雪佛龙) 这种综合巨头，OXY 是纯粹的上游勘探与生产商，股价对油价非常敏感。是巴菲特重仓股票（Berkshire Hathaway公司持有OXY约30%的股份），同时 OXY 也是Permian Basin 最大生产商，这个油田也是全球最赚钱的油田之一，公司也大量投资新技术例如空气捕碳，碳封存等等，如果未来碳市场发展，这会是新的利润来源。是个值得中短期持有的周期股。'
   },
 
   // --- 医疗保险 ---
@@ -141,7 +141,7 @@ export const stockOpinions: StockOpinion[] = [
     name: 'Silver Futures',
     sector: '期货',
     rating: 'SELL',
-    content: '白银，几乎和黄金一样出名的资产。但白银跟黄金不同，银可以是工业产品，前段时间涨太多了。超过100严重偏离产业基本面，后续会继续回调到适合的位置。'
+    content: '白银，几乎和黄金一样出名的资产。但白银跟黄金不同，银可以是工业产品，前段时间涨太多了。超过100严重偏离产业基本面，后续会继续回调到适合的位置。当然不是说涨不动，只是不太可能回前高了，即使回前高估计也数不清多少年过去了。'
   },
 
   // --- Crypto ---
