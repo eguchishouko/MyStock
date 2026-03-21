@@ -2,71 +2,181 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { stockOpinions, getTradingViewLink, getRatingColor } from '../data/stockOpinions';
 
-// 按板块分组
+// 按照定义好的板块进行分组
 const sectors = {};
 stockOpinions.forEach(item => {
   if (!sectors[item.sector]) sectors[item.sector] = [];
   sectors[item.sector].push(item);
 });
+
+// 定义一下板块显示的顺序（让它看起来有逻辑）
+const sectorOrder =[
+  '个股：科技与通信',
+  '个股：传统价值与周期',
+  '指数：宽基与杠杆',
+  '指数：行业主题',
+  '大宗商品与固收',
+  '衍生品：波动率与尾部对冲',
+  '加密资产与概念股'
+];
 ---
 
 <BaseLayout title="公司观点">
   <div class="card">
-    <h1>🧐 市场观察 (Market Opinions)</h1>
-    <p>以下评级仅代表个人在特定时间点的偏见，不构成投资建议。<br>DYOR (Do Your Own Research).</p>
-    <a href="/" style="font-size:0.9rem;">← 返回首页</a>
+    <h1 style="margin-top:0;">🧐 市场观察 (Market Opinions)</h1>
+    <p>以下评级与观点仅代表个人在特定时间点的偏见，不构成任何投资建议。<br>包含个股、加密货币、大盘宽基、衍生品及波动率工具等的详尽整理。</p>
+    <div style="margin-top: 15px;">
+      <span style="display:inline-block; padding:2px 8px; border-radius:4px; background:rgba(0,200,83,0.1); color:#00c853; font-size:0.8rem; margin-right:10px;">BUY: 看多</span>
+      <span style="display:inline-block; padding:2px 8px; border-radius:4px; background:rgba(255,171,0,0.1); color:#ffab00; font-size:0.8rem; margin-right:10px;">HOLD: 观望/持有</span>
+      <span style="display:inline-block; padding:2px 8px; border-radius:4px; background:rgba(255,61,0,0.1); color:#ff3d00; font-size:0.8rem;">SELL: 看空/规避</span>
+    </div>
   </div>
 
-  {Object.keys(sectors).map(sector => (
-    <div class="card">
-      <h2 class="sector-title">{sector}</h2>
-      <div class="opinion-grid">
-        {sectors[sector].map(stock => (
-          <div class="opinion-item">
-            <div class="opinion-header">
-              <div class="stock-info">
-                <a href={getTradingViewLink(stock.symbol)} target="_blank" class="stock-symbol">
-                  {stock.symbol} <i class="fas fa-external-link-alt" style="font-size:0.7rem; opacity:0.5;"></i>
-                </a>
-                <div class="stock-name">{stock.name}</div>
-              </div>
-              <div class="stock-rating" style={`color: ${getRatingColor(stock.rating)}`}>
-                {stock.rating}
-              </div>
+  <div class="accordion-container">
+    {sectorOrder.map(sector => (
+      sectors[sector] && (
+        <details class="sector-accordion">
+          <!-- 折叠面板的标题栏 -->
+          <summary class="sector-summary">
+            <div style="display:flex; align-items:center; gap:15px;">
+              <span class="sector-title">{sector}</span>
+              <span class="sector-count">{sectors[sector].length} 个标的</span>
             </div>
-            <p class="stock-content">{stock.content}</p>
+            <i class="fas fa-chevron-down arrow-icon"></i>
+          </summary>
+          
+          <!-- 折叠面板展开后的内容 -->
+          <div class="opinion-grid">
+            {sectors[sector].map(stock => (
+              <div class="opinion-item">
+                <div class="opinion-header">
+                  <div class="stock-info">
+                    <a href={getTradingViewLink(stock.symbol)} target="_blank" rel="noopener noreferrer" class="stock-symbol">
+                      {stock.symbol} <i class="fas fa-external-link-alt" style="font-size:0.7rem; opacity:0.5;"></i>
+                    </a>
+                    <div class="stock-name">{stock.name}</div>
+                  </div>
+                  <div class="stock-rating" style={`color: ${getRatingColor(stock.rating)}; background: ${getRatingColor(stock.rating)}20; border: 1px solid ${getRatingColor(stock.rating)}50;`}>
+                    {stock.rating}
+                  </div>
+                </div>
+                <p class="stock-content">{stock.content}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  ))}
+        </details>
+      )
+    ))}
+  </div>
 
   <style>
-    .sector-title { margin-bottom: 20px; font-size: 1.5rem; color: var(--text-main); border-left: 4px solid var(--highlight); padding-left: 10px; border-bottom: none !important; }
-    
-    .opinion-grid { display: grid; gap: 20px; }
-    
-    .opinion-item { 
-      background: rgba(255,255,255,0.03); 
-      border-radius: 8px; 
-      padding: 20px; 
-      border: 1px solid rgba(255,255,255,0.05);
-      transition: background 0.2s;
+    .accordion-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
-    .opinion-item:hover { background: rgba(255,255,255,0.06); }
 
-    .opinion-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    /* 折叠面板整体外壳 */
+    .sector-accordion {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .sector-accordion:hover {
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    /* 标题栏区域 */
+    .sector-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 25px;
+      cursor: pointer;
+      user-select: none;
+      list-style: none; /* 隐藏默认的三角形 */
+      background: rgba(0,0,0,0.2);
+    }
+    .sector-summary::-webkit-details-marker {
+      display: none; /* 隐藏 Safari 下的默认三角形 */
+    }
+    
+    .sector-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: var(--text-main);
+      border-left: 4px solid var(--highlight);
+      padding-left: 12px;
+    }
+    .sector-count {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      background: rgba(255,255,255,0.05);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .arrow-icon {
+      color: var(--text-sub);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 展开状态时的箭头旋转和标题底色 */
+    details[open] .arrow-icon {
+      transform: rotate(180deg);
+      color: var(--highlight);
+    }
+    details[open] .sector-summary {
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(41, 98, 255, 0.05);
+    }
+
+    /* 内部网格布局 */
+    .opinion-grid { 
+      display: grid; 
+      gap: 20px; 
+      padding: 25px;
+      /* 简单的展开动画效果 */
+      animation: slideDown 0.3s ease-out;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* 单个标的卡片 */
+    .opinion-item { 
+      background: rgba(0,0,0,0.2); 
+      border-radius: 10px; 
+      padding: 20px; 
+      border: 1px solid rgba(255,255,255,0.03);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .opinion-item:hover { 
+      background: rgba(0,0,0,0.3);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .opinion-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
     
     .stock-symbol { 
-      font-size: 1.2rem; font-weight: bold; color: var(--highlight); 
-      text-decoration: none; display: flex; align-items: center; gap: 5px;
+      font-size: 1.3rem; font-weight: 900; color: var(--text-main); 
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      font-family: 'Courier New', Courier, monospace;
     }
-    .stock-symbol:hover { text-decoration: underline; }
+    .stock-symbol:hover { color: var(--highlight); }
     
-    .stock-name { font-size: 0.85rem; color: var(--text-sub); }
+    .stock-name { font-size: 0.85rem; color: var(--text-sub); margin-top: 2px;}
     
-    .stock-rating { font-weight: bold; font-family: monospace; font-size: 0.9rem; padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,0.2); }
+    .stock-rating { 
+      font-weight: bold; font-family: monospace; font-size: 0.85rem; 
+      padding: 4px 10px; border-radius: 6px; letter-spacing: 0.5px;
+    }
     
-    .stock-content { font-size: 1rem; color: var(--text-main); line-height: 1.6; margin: 0; text-align: justify;}
+    .stock-content { 
+      font-size: 1.05rem; color: var(--text-sub); line-height: 1.8; margin: 0; text-align: justify;
+    }
   </style>
 </BaseLayout>
