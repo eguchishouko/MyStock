@@ -63,7 +63,59 @@ const currentPath = Astro.url.pathname;
       /* Footer 样式 */
       .site-footer { text-align: center; padding: 40px 20px; color: var(--text-sub); font-family: monospace; font-size: 0.9rem; border-top: 1px solid var(--card-border); margin-top: 40px; background: rgba(0,0,0,0.3); position: relative; z-index: 1; }
 
-      @media (max-width: 768px) { .nav-link span { display: none; } .nav-menu { gap: 15px; } }
+      /* === 📱 移动端 App 级适配 === */
+      @media (max-width: 768px) {
+        body { padding-top: 60px; padding-bottom: 120px; }
+        .container { padding: 15px 10px; }
+        .card { padding: 20px 15px; border-radius: 12px; }
+        h1 { font-size: 1.8rem !important; }
+        .card h2 { font-size: 1.3rem; }
+        
+        /* 顶部保留头像和明暗开关 */
+        .navbar { height: 60px; padding: 0 15px; }
+        .username { display: none; } /* 隐藏名字留出空间 */
+        
+        /* 核心魔法：变成【手机 App 底部导航栏】 */
+        .nav-menu {
+          position: fixed; bottom: 0; left: 0; width: 100%; height: 65px;
+          background: rgba(15, 18, 22, 0.98); backdrop-filter: blur(15px);
+          border-top: 1px solid var(--card-border);
+          display: flex; flex-direction: row; justify-content: flex-start;
+          overflow-x: auto; overflow-y: hidden; padding: 0 10px; gap: 5px;
+          -webkit-overflow-scrolling: touch; z-index: 1001;
+        }
+        .nav-menu::-webkit-scrollbar { display: none; }
+        .nav-link {
+          flex-direction: column; justify-content: center; min-width: 65px;
+          font-size: 0.75rem; gap: 4px; padding: 0; border-bottom: none !important;
+        }
+        .nav-link i { font-size: 1.2rem; }
+        .nav-link span { display: block; }
+        .nav-link.active { 
+          border-top: 2px solid var(--highlight); 
+          color: var(--highlight); 
+          background: rgba(41, 98, 255, 0.1); 
+          border-radius: 8px 8px 0 0; 
+        }
+
+        /* 战绩页：图表变竖向排版 */
+        .portfolio-dashboard { flex-direction: column; align-items: stretch; padding: 15px; gap: 20px; }
+        .chart-left { width: 100%; justify-content: center; gap: 20px; }
+        .chart-stats { 
+          width: 100%; flex-direction: row; justify-content: space-around; 
+          padding-left: 0; border-left: none; border-top: 1px dashed var(--card-border); padding-top: 15px; 
+        }
+        .stat-item .stat-value { font-size: 1.2rem; }
+
+        /* 赞助页：超长钱包地址换行与按钮撑满 */
+        .crypto-item { flex-direction: column; align-items: stretch; gap: 10px; }
+        .crypto-info { width: 100%; }
+        .btn-copy { width: 100%; text-align: center; margin-left: 0; }
+        
+        /* 首页：置顶卡片适配 */
+        .pinned-entry { flex-direction: column; align-items: flex-start; gap: 10px; padding: 15px; }
+        .pinned-icon { display: none; }
+      }
     </style>
   </head>
   <body>
