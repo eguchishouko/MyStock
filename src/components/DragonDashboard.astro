@@ -123,6 +123,16 @@
     opacity: 0; 
     transition: transform 0.8s ease-in, opacity 0.5s 0.3s;
   }
+
+    /* === 📱 移动端小黑龙适配 === */
+    @media (max-width: 768px) {
+    .dragon-widget {
+      bottom: 75px; /* 向上移动，躲开底部的手机菜单 */
+      right: 5px;
+      transform: scale(0.65); /* 整体缩小至 65%，不挡视线 */
+      transform-origin: bottom right;
+    }
+  }
 </style>
 
 <script>
