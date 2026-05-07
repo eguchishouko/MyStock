@@ -15,22 +15,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">历史胜率 (Win Rate)</div>
-      <div class="kpi-value">66%</div>
-      <div class="kpi-sub">9 盈利 / 6 亏损</div>
+      <div class="kpi-value">64.7%</div>
+      <div class="kpi-sub">11 盈利 / 6 亏损</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">最佳交易 (Best Trade)</div>
-      <div class="kpi-value profit">+21.15%</div>
-      <div class="kpi-sub">AAL</div>
+      <div class="kpi-value profit">+23.6%</div>
+      <div class="kpi-sub">FLNC</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">最差交易 (Worst Trade)</div>
-      <div class="kpi-value loss">-18.51%</div>
-      <div class="kpi-sub">HOOD</div>
+      <div class="kpi-value loss">-25.10%</div>
+      <div class="kpi-sub">SQQQ</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">最大回撤 (Max Drawdown)</div>
-      <div class="kpi-value loss">-12.4%</div>
+      <div class="kpi-value loss">-26.1%</div>
       <div class="kpi-sub">Estimated</div>
     </div>
   </div>
@@ -51,12 +51,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <thead><tr style="border-bottom: 1px solid var(--card-border);"><th style="padding:12px; color:var(--text-sub);">代码</th><th style="padding:12px; color:var(--text-sub);">交易时间</th><th style="padding:12px; color:var(--text-sub);">当前状态</th></tr></thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--card-border);">
-            <td style="padding:12px;"><b>UVIX</b></td><td style="padding:12px;">2026.03</td><td style="padding:12px; color: var(--text-sub);">持有</td>
+            <td style="padding:12px;"><b>GOOGL</b></td><td style="padding:12px;">2026.05</td><td style="padding:12px; color: var(--text-sub);">持有</td>
           </tr>
           <td style="padding:12px;"><b>NVO</b></td><td style="padding:12px;">2026.02</td><td style="padding:12px; color: var(--text-sub);">持有</td>
-        </tr>
-          <tr style="border-bottom: 1px solid var(--card-border);">
-            <td style="padding:12px;"><b>SQQQ</b></td><td style="padding:12px;">2026.03</td><td style="padding:12px; color: var(--text-sub);">持有</td>
           </tr>
         </tbody>
       </table>
@@ -70,14 +67,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div style="position: absolute; z-index: 1; font-size: 0.75rem; color: var(--text-sub); font-weight: bold; text-align: center; letter-spacing: 1px;">ASSETS</div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--highlight);"></div><div><b>FLNC</b>: 97.22%</div></div>
-          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--profit);"></div><div><b>NVO</b>: 1.79%</div></div>
-          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: #ff9800;"></div><div><b>SQQQ</b>: 0.87%</div></div>
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--highlight);"></div><div><b>GOOGL</b>: 261.7%</div></div>
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 0.95rem; color: var(--text-main);"><div style="width: 12px; height: 12px; border-radius: 3px; background: var(--profit);"></div><div><b>NVO</b>: 2.3%</div></div>
         </div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 15px; padding-left: 25px; border-left: 1px dashed var(--card-border);">
-        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">绝对收益率 (Absolute)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+18.26%</div></div>
-        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">年化收益率 (XIRR)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+30.50%</div></div>
+        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">绝对收益率 (Absolute)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+45.54%</div></div>
+        <div><div style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 4px;">年化收益率 (XIRR)</div><div style="font-size: 1.5rem; font-weight: 900; font-family: monospace; color: var(--profit);">+85.20%</div></div>
       </div>
     </div>
   </div>
@@ -89,6 +85,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <table style="width: 100%; border-collapse: collapse; text-align: left;">
         <thead><tr style="border-bottom: 1px solid var(--card-border);"><th style="padding:12px; color:var(--text-sub);">代码</th><th style="padding:12px; color:var(--text-sub);">盈亏 %</th><th style="padding:12px; color:var(--text-sub);">状态</th></tr></thead>
         <tbody>
+          <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>FLNC</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+23.60%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>AAL</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+21.15%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>GOOGL</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+18.09%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>OXY</b></td><td style="padding:12px; color: var(--profit); font-weight:bold;">+16.53%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
@@ -100,6 +97,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <tr style="border-bottom: 1px dashed var(--card-border);"><td style="padding:12px;"><b>XYZ</b></td><td style="padding:12px; color: var(--loss); font-weight:bold;">-8.80%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr><td style="padding:12px;"><b>UVIX</b></td><td style="padding:12px; color: var(--loss); font-weight:bold;">-15.77%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
           <tr><td style="padding:12px;"><b>HOOD</b></td><td style="padding:12px; color: var(--loss); font-weight:bold;">-18.51%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
+          <tr><td style="padding:12px;"><b>SQQQ</b></td><td style="padding:12px; color: var(--loss); font-weight:bold;">-25.10%</td><td style="padding:12px; color:var(--text-sub);">已清仓</td></tr>
         </tbody>
       </table>
     </div>
