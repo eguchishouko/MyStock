@@ -16,7 +16,7 @@ const currentPath = Astro.url.pathname;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Lotuseater | 交易思考</title>
+    <title>Lotus-eater | 交易思考</title>
     <link rel="icon" type="image/png" href="/favicon.png?v=2" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -262,12 +262,13 @@ const currentPath = Astro.url.pathname;
         <div class="card">
           <h2>📊 交易战绩 (Trading)</h2>
           
-          <h3 style="color:var(--text-sub); margin-bottom:10px; margin-top:20px;">⏳ 2026.05.26 持仓 (Holding)</h3>
+          <h3 style="color:var(--text-sub); margin-bottom:10px; margin-top:20px;">⏳ 2026.05.29 持仓 (Holding)</h3>
           <div class="table-wrapper">
             <table>
               <thead><tr><th>代码</th><th>建仓时间</th><th>当前状态</th></tr></thead>
               <tbody>
-                <tr><td><b>MUU</b></td><td>2026.05</td><td class="flat">持有</td></tr>
+                <tr><td><b>CASH</b></td><td>2026.05</td><td class="flat">持有</td></tr>
+                <tr><td><b>SATL</b></td><td>2026.05</td><td class="flat">持有</td></tr>
                 <tr><td><b>NVO</b></td><td>2026.02</td><td class="flat">持有</td></tr>
               </tbody>
             </table>
@@ -277,19 +278,20 @@ const currentPath = Astro.url.pathname;
             <div class="chart-left">
               <div class="donut-chart"><div class="chart-text">ASSETS</div></div>
               <div class="chart-legend">
-                <div class="legend-item"><div class="dot dot-psq"></div><div><b>MUU</b>: 99.3%</div></div>
-                <div class="legend-item"><div class="dot dot-nvo"></div><div><b>NVO</b>: 0.7%</div></div>
+                <div class="legend-item"><div class="dot dot-psq"></div><div><b>CASH</b>: 97.17%</div></div>
+                <div class="legend-item"><div class="dot dot-psq"></div><div><b>SATL</b>: 2.38%</div></div>
+                <div class="legend-item"><div class="dot dot-nvo"></div><div><b>NVO</b>: 0.45%</div></div>
               </div>
             </div>
             
             <div class="chart-stats">
               <div class="stat-item">
                 <div class="stat-label">绝对收益率 (Absolute)</div>
-                <div class="stat-value profit">+115.73%</div>
+                <div class="stat-value profit">+137.66%</div>
               </div>
               <div class="stat-item">
                 <div class="stat-label">年化收益率 (XIRR)</div>
-                <div class="stat-value profit">+161.50%</div>
+                <div class="stat-value profit">+186.31%</div>
               </div>
             </div>
           </div>
@@ -299,12 +301,13 @@ const currentPath = Astro.url.pathname;
             <table>
               <thead><tr><th>代码</th><th>盈亏 %</th><th>状态</th></tr></thead>
               <tbody>
+                <tr><td><b>MUU</b></td><td class="profit">+36.75%</td><td>已清仓</td></tr>
                 <tr><td><b>FLNC</b></td><td class="profit">+23.60%</td><td>已清仓</td></tr>
                 <tr><td><b>AAL</b></td><td class="profit">+21.15%</td><td>已清仓</td></tr>
                 <tr><td><b>GOOGL</b></td><td class="profit">+19.46%</td><td>已清仓</td></tr>
-                <tr><td><b>OXY</b></td><td class="profit">+16.53%</td><td>已清仓</td></tr>
+                <tr><td><b>OXY</b></td><td class="profit">+16.70%</td><td>已清仓</td></tr>
                 <tr><td><b>SCO</b></td><td class="profit">+10.23%</td><td>已清仓</td></tr>
-                <tr><td><b>CRCL</b></td><td class="profit">+8.89%</td><td>已清仓</td></tr>
+                <tr><td><b>CRCL</b></td><td class="profit">+8.92%</td><td>已清仓</td></tr>
                 <tr><td><b>TSLA</b></td><td class="profit">+8.47%</td><td>已清仓</td></tr>
                 <tr><td><b>UNH</b></td><td class="profit">+0.84%</td><td>已清仓</td></tr>
                 <tr><td><b>PSQ</b></td><td class="profit">+0.25%</td><td>已清仓</td></tr>
@@ -313,7 +316,7 @@ const currentPath = Astro.url.pathname;
                 <tr><td><b>XYZ</b></td><td class="loss">-8.80%</td><td>已清仓</td></tr>
                 <tr><td><b>UVIX</b></td><td class="loss">-15.77%</td><td>已清仓</td></tr>
                 <tr><td><b>HOOD</b></td><td class="loss">-18.51%</td><td>已清仓</td></tr>
-                <tr><td><b>SQQQ</b></td><td class="loss">-25.10%</td><td>已清仓</td></tr>
+                <tr><td><b>SQQQ</b></td><td class="loss">-28.04%</td><td>已清仓</td></tr>
               </tbody>
             </table>
           </div>
