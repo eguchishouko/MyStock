@@ -1,5 +1,5 @@
 ---
-title: '2026.09.15 仍然持有ECHX/NBIS'
+title: '2026.09.15 仍然持有 $ECHX/NBIS'
 description: 'HOLDING'
 pubDate: '2026-09-15'
 ---
